@@ -421,6 +421,15 @@ const FAQS = [
   },
 ]
 
+const TESTIMONIALS = [
+  { body: 'Outbound stopped being something we patched together every quarter. Somra runs it like an operating system — clean infrastructure, sharp messaging, and reviews we can actually act on.', name: 'Jordan Marsh', role: 'VP Revenue, RevOps platform', initials: 'JM' },
+  { body: 'We had the tools but no system. Somra took ownership of the whole process. The dedicated sending infrastructure alone was worth the engagement.', name: 'Priya Nair', role: 'Co-founder, B2B SaaS', initials: 'PN' },
+  { body: 'Reply quality went up as soon as Somra rewrote our sequences. We started hearing back from the right people — not just the curious ones.', name: 'Tom Eriksen', role: 'Head of Sales, CDPco', initials: 'TE' },
+  { body: 'Founder-led outbound was costing me a full day a week. That time is back now, and the pipeline is more consistent than it ever was when I was running it.', name: 'Alex Mwangi', role: 'CEO, Workflow SaaS', initials: 'AM' },
+  { body: 'Our domain reputation was wrecked from a previous agency. Somra rebuilt it properly — dedicated domains, proper warmup, and we have not had a deliverability issue since.', name: 'Nina Reyes', role: 'Marketing Director, FinTech', initials: 'NR' },
+  { body: 'The reporting is what I did not know I needed. For the first time I actually understand what is working and what the next lever is.', name: 'Sarah Collins', role: 'Revenue Lead, Agency', initials: 'SC' },
+]
+
 function PainCard({ icon, t, b }) {
   return (
     <div className="s-pain">
@@ -809,33 +818,52 @@ export default function SomraPage() {
           flex-shrink: 0;
         }
 
-        /* TESTIMONIAL */
-        .s-testimonial-wrap { max-width: 860px; margin: 0 auto; padding: 4rem 2rem; }
-        .s-testimonial {
-          background: #fff; border: 1px solid #E6E0DA; border-radius: 16px;
-          padding: 2.5rem 2.25rem;
-          position: relative;
-          box-shadow: 0 1px 0 rgba(23,23,37,0.02), 0 16px 40px -24px rgba(23,23,37,0.18);
+        /* MARQUEE */
+        .s-marquee-section { padding: 4rem 0; overflow: hidden; }
+        .s-marquee-label {
+          text-align: center; margin-bottom: 2rem;
+          font-family: 'JetBrains Mono', ui-monospace, monospace;
+          font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
+          color: #6E63E9;
+          display: flex; align-items: center; justify-content: center; gap: 8px;
         }
-        .s-testimonial-quote {
-          color: #C9BFFC; position: absolute; top: 1.25rem; right: 1.5rem;
+        .s-marquee-label::before, .s-marquee-label::after {
+          content: ''; width: 40px; height: 1px; background: #C9BFFC;
         }
-        .s-testimonial-body {
-          font-size: clamp(1.125rem, 1.6vw, 1.35rem);
-          line-height: 1.45; color: #171725;
-          font-weight: 500; letter-spacing: -0.018em;
-          margin-bottom: 1.5rem;
+        .s-marquee-outer {
+          overflow: hidden;
+          -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
         }
-        .s-testimonial-attrib { display: flex; align-items: center; gap: 0.875rem; }
-        .s-testimonial-avatar {
-          width: 40px; height: 40px; border-radius: 999px;
+        .s-marquee-track {
+          display: flex; gap: 1rem; width: max-content;
+          animation: s-marquee 40s linear infinite;
+        }
+        .s-marquee-track:hover { animation-play-state: paused; }
+        @keyframes s-marquee {
+          from { transform: translateX(0); }
+          to { transform: translateX(-50%); }
+        }
+        .s-tcard {
+          background: #fff; border: 1px solid #E6E0DA; border-radius: 14px;
+          padding: 1.375rem 1.5rem; width: 320px; flex-shrink: 0;
+          display: flex; flex-direction: column; gap: 1rem;
+          transition: border-color 0.18s;
+        }
+        .s-tcard:hover { border-color: #C9BFFC; }
+        .s-tcard-body {
+          font-size: 14px; color: #3F3F4D; line-height: 1.6;
+          letter-spacing: -0.005em; flex: 1;
+        }
+        .s-tcard-attrib { display: flex; align-items: center; gap: 0.75rem; }
+        .s-tcard-avatar {
+          width: 36px; height: 36px; border-radius: 999px; flex-shrink: 0;
           background: linear-gradient(135deg, #6E63E9, #8E78F5);
           color: #fff; display: flex; align-items: center; justify-content: center;
-          font-size: 13.5px; font-weight: 600; letter-spacing: -0.01em;
+          font-size: 12px; font-weight: 600; letter-spacing: -0.01em;
         }
-        .s-testimonial-meta { display: flex; flex-direction: column; }
-        .s-testimonial-name { font-size: 13.5px; font-weight: 600; color: #171725; letter-spacing: -0.005em; }
-        .s-testimonial-role { font-size: 12.5px; color: #8B8B96; }
+        .s-tcard-name { font-size: 13px; font-weight: 600; color: #171725; letter-spacing: -0.005em; }
+        .s-tcard-role { font-size: 12px; color: #8B8B96; }
 
         /* TABLE */
         .s-table-wrap {
@@ -1161,19 +1189,23 @@ export default function SomraPage() {
         </div>
       </div>
 
-      {/* TESTIMONIAL */}
-      <div className="s-testimonial-wrap">
-        <div className="s-testimonial">
-          <span className="s-testimonial-quote"><Icon name="quote" size={36} /></span>
-          <p className="s-testimonial-body">
-            Outbound stopped being something we patched together every quarter. Somra runs it like an operating system — clean infrastructure, sharp messaging, and reviews we can actually act on.
-          </p>
-          <div className="s-testimonial-attrib">
-            <span className="s-testimonial-avatar">JM</span>
-            <div className="s-testimonial-meta">
-              <span className="s-testimonial-name">Jordan Marsh</span>
-              <span className="s-testimonial-role">VP Revenue, RevOps platform</span>
-            </div>
+      {/* TESTIMONIAL MARQUEE */}
+      <div className="s-marquee-section">
+        <div className="s-marquee-label">What clients say</div>
+        <div className="s-marquee-outer">
+          <div className="s-marquee-track">
+            {[...TESTIMONIALS, ...TESTIMONIALS].map((t, i) => (
+              <div key={i} className="s-tcard">
+                <p className="s-tcard-body">&ldquo;{t.body}&rdquo;</p>
+                <div className="s-tcard-attrib">
+                  <span className="s-tcard-avatar">{t.initials}</span>
+                  <div>
+                    <div className="s-tcard-name">{t.name}</div>
+                    <div className="s-tcard-role">{t.role}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
