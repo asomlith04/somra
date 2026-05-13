@@ -421,18 +421,32 @@ const FAQS = [
   },
 ]
 
-const TESTIMONIALS = [
-  { body: 'Outbound stopped being something we patched together every quarter. Somra runs it like an operating system — clean infrastructure, sharp messaging, and reviews we can actually act on.', name: 'Jordan Marsh', role: 'VP Revenue, RevOps platform', initials: 'JM' },
-  { body: 'We had the tools but no system. Somra took ownership of the whole process. The dedicated sending infrastructure alone was worth the engagement.', name: 'Priya Nair', role: 'Co-founder, B2B SaaS', initials: 'PN' },
-  { body: 'Reply quality went up as soon as Somra rewrote our sequences. We started hearing back from the right people — not just the curious ones.', name: 'Tom Eriksen', role: 'Head of Sales, CDPco', initials: 'TE' },
-  { body: 'Founder-led outbound was costing me a full day a week. That time is back now, and the pipeline is more consistent than it ever was when I was running it.', name: 'Alex Mwangi', role: 'CEO, Workflow SaaS', initials: 'AM' },
-  { body: 'Our domain reputation was wrecked from a previous agency. Somra rebuilt it properly — dedicated domains, proper warmup, and we have not had a deliverability issue since.', name: 'Nina Reyes', role: 'Marketing Director, FinTech', initials: 'NR' },
-  { body: 'The reporting is what I did not know I needed. For the first time I actually understand what is working and what the next lever is.', name: 'Sarah Collins', role: 'Revenue Lead, Agency', initials: 'SC' },
-]
+function useScrollReveal() {
+  useEffect(() => {
+    const mo = window.matchMedia('(prefers-reduced-motion: reduce)')
+    if (mo.matches) {
+      document.querySelectorAll('.s-reveal').forEach(el => el.classList.add('s-reveal-in'))
+      return
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('s-reveal-in')
+            io.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    )
+    document.querySelectorAll('.s-reveal').forEach(el => io.observe(el))
+    return () => io.disconnect()
+  }, [])
+}
 
-function PainCard({ icon, t, b }) {
+function PainCard({ icon, t, b, className = '', style = {} }) {
   return (
-    <div className="s-pain">
+    <div className={`s-pain ${className}`} style={style}>
       <div className="s-pain-icon"><Icon name={icon} size={18} /></div>
       <div>
         <div className="s-pain-t">{t}</div>
@@ -442,9 +456,9 @@ function PainCard({ icon, t, b }) {
   )
 }
 
-function OptionCard({ icon, t, d, p }) {
+function OptionCard({ icon, t, d, p, className = '', style = {} }) {
   return (
-    <div className="s-option">
+    <div className={`s-option ${className}`} style={style}>
       <div className="s-option-head">
         <div className="s-option-icon"><Icon name={icon} size={18} /></div>
         <div className="s-option-t">{t}</div>
@@ -457,9 +471,9 @@ function OptionCard({ icon, t, d, p }) {
   )
 }
 
-function StageCard({ n, icon, t, d }) {
+function StageCard({ n, icon, t, d, className = '', style = {} }) {
   return (
-    <div className="s-stage">
+    <div className={`s-stage ${className}`} style={style}>
       <div className="s-stage-num">
         <Icon name={icon} size={18} />
       </div>
@@ -490,6 +504,7 @@ export default function SomraPage() {
   const [activeTab, setActiveTab] = useState(VERTICALS[0].id)
   const [openFaq, setOpenFaq] = useState(0)
   const active = VERTICALS.find((v) => v.id === activeTab) ?? VERTICALS[0]
+  useScrollReveal()
 
   useEffect(() => {
     const prevHtml = document.documentElement.style.background
@@ -590,6 +605,9 @@ export default function SomraPage() {
         .s-hero-wrap {
           position: relative;
           overflow: hidden;
+          min-height: calc(100dvh - 64px);
+          display: flex;
+          flex-direction: column;
         }
         .s-hero-glow {
           position: absolute;
@@ -603,6 +621,9 @@ export default function SomraPage() {
           max-width: 1120px; margin: 0 auto;
           padding: 5rem 2rem 4rem;
           text-align: center;
+          flex: 1;
+          display: flex; flex-direction: column;
+          align-items: center; justify-content: center;
         }
         .s-eyebrow {
           display: inline-flex; align-items: center; gap: 8px;
@@ -681,9 +702,9 @@ export default function SomraPage() {
         .s-flow-step.active .s-flow-step-n { color: #6E63E9; }
 
         /* SECTIONS */
-        .s-section { max-width: 1120px; margin: 0 auto; padding: 5rem 2rem; }
+        .s-section { max-width: 1120px; margin: 0 auto; padding: 6.5rem 2rem; }
         .s-section-tinted { background: #F5F1EC; }
-        .s-section-tinted-wrap { padding: 5rem 0; }
+        .s-section-tinted-wrap { padding: 6.5rem 0; }
         .s-section-eyebrow {
           font-family: 'JetBrains Mono', ui-monospace, monospace;
           font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
@@ -818,52 +839,56 @@ export default function SomraPage() {
           flex-shrink: 0;
         }
 
-        /* MARQUEE */
-        .s-marquee-section { padding: 4rem 0; overflow: hidden; }
-        .s-marquee-label {
-          text-align: center; margin-bottom: 2rem;
-          font-family: 'JetBrains Mono', ui-monospace, monospace;
-          font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
-          color: #6E63E9;
-          display: flex; align-items: center; justify-content: center; gap: 8px;
+        /* SCROLL REVEAL */
+        .s-reveal {
+          opacity: 0;
+          transform: translateY(28px);
+          transition:
+            opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms),
+            transform 0.65s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms);
         }
-        .s-marquee-label::before, .s-marquee-label::after {
-          content: ''; width: 40px; height: 1px; background: #C9BFFC;
+        .s-reveal-in { opacity: 1; transform: none; }
+        @media (prefers-reduced-motion: reduce) {
+          .s-reveal { opacity: 1; transform: none; transition: none; }
         }
-        .s-marquee-outer {
-          overflow: hidden;
-          -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
-          mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+
+        /* MICRO-INTERACTIONS */
+        .s-btn { will-change: transform; }
+        .s-btn:active { transform: scale(0.97) !important; }
+        .s-btn-primary:hover {
+          box-shadow: 0 0 0 3px rgba(110,99,233,0.18), 0 8px 24px -8px rgba(110,99,233,0.6) !important;
         }
-        .s-marquee-track {
-          display: flex; gap: 1rem; width: max-content;
-          animation: s-marquee 40s linear infinite;
+        .s-btn-ghost:active { transform: scale(0.97); }
+        .s-pain { will-change: transform; }
+        .s-pain:hover { transform: translateY(-2px) !important; box-shadow: 0 8px 20px -12px rgba(110,99,233,0.22); }
+        .s-option { will-change: transform; }
+        .s-option:hover { transform: translateY(-2px); }
+        .s-stage { will-change: transform; }
+        .s-stage:hover { transform: translateY(-2px) !important; }
+        .s-flow-step { cursor: default; }
+        .s-flow-step:hover:not(.active) { background: #F5F1EC; border-color: #C9BFFC; }
+        .s-flow-step-i { transition: color 0.18s, transform 0.2s cubic-bezier(0.16,1,0.3,1); }
+        .s-flow-step:hover .s-flow-step-i { transform: scale(1.15); }
+        .s-nav-link { position: relative; }
+        .s-nav-link::after {
+          content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+          height: 1.5px; background: #6E63E9;
+          transform: scaleX(0); transform-origin: left;
+          transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .s-marquee-track:hover { animation-play-state: paused; }
-        @keyframes s-marquee {
-          from { transform: translateX(0); }
-          to { transform: translateX(-50%); }
-        }
-        .s-tcard {
-          background: #fff; border: 1px solid #E6E0DA; border-radius: 14px;
-          padding: 1.375rem 1.5rem; width: 320px; flex-shrink: 0;
-          display: flex; flex-direction: column; gap: 1rem;
-          transition: border-color 0.18s;
-        }
-        .s-tcard:hover { border-color: #C9BFFC; }
-        .s-tcard-body {
-          font-size: 14px; color: #3F3F4D; line-height: 1.6;
-          letter-spacing: -0.005em; flex: 1;
-        }
-        .s-tcard-attrib { display: flex; align-items: center; gap: 0.75rem; }
-        .s-tcard-avatar {
-          width: 36px; height: 36px; border-radius: 999px; flex-shrink: 0;
-          background: linear-gradient(135deg, #6E63E9, #8E78F5);
-          color: #fff; display: flex; align-items: center; justify-content: center;
-          font-size: 12px; font-weight: 600; letter-spacing: -0.01em;
-        }
-        .s-tcard-name { font-size: 13px; font-weight: 600; color: #171725; letter-spacing: -0.005em; }
-        .s-tcard-role { font-size: 12px; color: #8B8B96; }
+        .s-nav-link:hover::after { transform: scaleX(1); }
+        .s-tab { will-change: transform; }
+        .s-tab:active { transform: scale(0.96); }
+        .s-wordmark-mark { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s; }
+        .s-wordmark:hover .s-wordmark-mark { transform: scale(1.08); }
+        .s-faq-q { transition: color 0.15s; }
+        .s-faq-item:not(.open):hover .s-faq-q { color: #6E63E9; }
+        .s-faq-toggle { transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background 0.18s; }
+        .s-faq-item.open .s-faq-toggle { transform: rotate(0deg); background: #E0D8FC; }
+        .s-outcome { transition: border-color 0.18s, transform 0.2s cubic-bezier(0.16,1,0.3,1); will-change: transform; }
+        .s-outcome:hover { border-color: #C9BFFC; transform: translateY(-1px); }
+        .s-fit { transition: box-shadow 0.2s, transform 0.2s cubic-bezier(0.16,1,0.3,1); will-change: transform; }
+        .s-fit:hover { transform: translateY(-2px); box-shadow: 0 8px 24px -12px rgba(23,23,37,0.12); }
 
         /* TABLE */
         .s-table-wrap {
@@ -1056,10 +1081,8 @@ export default function SomraPage() {
           .s-nav-right .s-nav-link { display: none; }
           .s-hero { padding: 3.25rem 1.25rem 2.5rem; }
           .s-section, .s-footer-inner { padding-left: 1.25rem; padding-right: 1.25rem; }
-          .s-section { padding-top: 3.5rem; padding-bottom: 3.5rem; }
-          .s-section-tinted-wrap { padding: 3.5rem 0; }
-          .s-testimonial-wrap { padding: 3rem 1.25rem; }
-          .s-testimonial { padding: 2rem 1.5rem; }
+          .s-section { padding-top: 4rem; padding-bottom: 4rem; }
+          .s-section-tinted-wrap { padding: 4rem 0; }
           .s-final { padding: 2.5rem 1.5rem; }
           .s-flow { padding: 1.25rem; }
           .s-flow-row { flex-direction: column; }
@@ -1132,11 +1155,16 @@ export default function SomraPage() {
 
       {/* WHY MOST EFFORTS STALL */}
       <section className="s-section">
-        <div className="s-section-eyebrow">The problem</div>
-        <h2 className="s-section-h">Most outbound stalls before it produces real conversations.</h2>
-        <p className="s-section-sub">The market is rarely the problem. The system behind it is.</p>
+        <div className="s-reveal">
+          <div className="s-section-eyebrow">The problem</div>
+          <h2 className="s-section-h">Most outbound stalls before it produces real conversations.</h2>
+          <p className="s-section-sub">The market is rarely the problem. The system behind it is.</p>
+        </div>
         <div className="s-pains">
-          {PAINS.map((p, i) => <PainCard key={i} icon={p.icon} t={p.t} b={p.b} />)}
+          {PAINS.map((p, i) => (
+            <PainCard key={i} icon={p.icon} t={p.t} b={p.b}
+              className="s-reveal" style={{ '--reveal-delay': `${i * 55}ms` }} />
+          ))}
         </div>
       </section>
 
@@ -1144,13 +1172,18 @@ export default function SomraPage() {
       <div className="s-section-tinted">
         <div className="s-section-tinted-wrap">
           <div className="s-section" style={{ paddingTop: 0, paddingBottom: 0 }}>
-            <div className="s-section-eyebrow">Common approaches</div>
-            <h2 className="s-section-h">Why most outbound approaches fall short.</h2>
-            <p className="s-section-sub">Three patterns. All create activity. None create a system.</p>
-            <div className="s-options">
-              {OPTIONS.map((o, i) => <OptionCard key={i} icon={o.icon} t={o.t} d={o.d} p={o.p} />)}
+            <div className="s-reveal">
+              <div className="s-section-eyebrow">Common approaches</div>
+              <h2 className="s-section-h">Why most outbound approaches fall short.</h2>
+              <p className="s-section-sub">Three patterns. All create activity. None create a system.</p>
             </div>
-            <div className="s-options-closer">
+            <div className="s-options">
+              {OPTIONS.map((o, i) => (
+                <OptionCard key={i} icon={o.icon} t={o.t} d={o.d} p={o.p}
+                  className="s-reveal" style={{ '--reveal-delay': `${i * 80}ms` }} />
+              ))}
+            </div>
+            <div className="s-options-closer s-reveal" style={{ '--reveal-delay': '240ms' }}>
               <span className="s-options-closer-mark"><Icon name="sparkle" size={18} /></span>
               The issue isn’t effort. It’s that outbound is run as a series of tasks, not a system.
             </div>
@@ -1160,13 +1193,18 @@ export default function SomraPage() {
 
       {/* WHAT SOMRA BUILDS */}
       <section id="how-it-works" className="s-section">
-        <div className="s-section-eyebrow">The system</div>
-        <h2 className="s-section-h">What Somra puts in place instead.</h2>
-        <p className="s-section-sub">
-          A fully managed outbound system — built, operated, and improved over time.
-        </p>
+        <div className="s-reveal">
+          <div className="s-section-eyebrow">The system</div>
+          <h2 className="s-section-h">What Somra puts in place instead.</h2>
+          <p className="s-section-sub">
+            A fully managed outbound system — built, operated, and improved over time.
+          </p>
+        </div>
         <div className="s-stages">
-          {STAGES.map((s) => <StageCard key={s.n} n={s.n} icon={s.icon} t={s.t} d={s.d} />)}
+          {STAGES.map((s, i) => (
+            <StageCard key={s.n} n={s.n} icon={s.icon} t={s.t} d={s.d}
+              className="s-reveal" style={{ '--reveal-delay': `${i * 60}ms` }} />
+          ))}
         </div>
       </section>
 
@@ -1174,12 +1212,14 @@ export default function SomraPage() {
       <div className="s-section-tinted">
         <div className="s-section-tinted-wrap">
           <div className="s-section" style={{ paddingTop: 0, paddingBottom: 0 }}>
-            <div className="s-section-eyebrow">The outcome</div>
-            <h2 className="s-section-h">What the system is meant to create.</h2>
-            <p className="s-section-sub">Not more activity. A steadier path from cold outreach to qualified conversations.</p>
+            <div className="s-reveal">
+              <div className="s-section-eyebrow">The outcome</div>
+              <h2 className="s-section-h">What the system is meant to create.</h2>
+              <p className="s-section-sub">Not more activity. A steadier path from cold outreach to qualified conversations.</p>
+            </div>
             <div className="s-outcomes">
               {OUTCOMES.map((o, i) => (
-                <div key={i} className="s-outcome">
+                <div key={i} className="s-outcome s-reveal" style={{ '--reveal-delay': `${i * 50}ms` }}>
                   <span className="s-outcome-check"><Icon name="check" size={14} /></span>
                   <span>{o}</span>
                 </div>
@@ -1189,33 +1229,14 @@ export default function SomraPage() {
         </div>
       </div>
 
-      {/* TESTIMONIAL MARQUEE */}
-      <div className="s-marquee-section">
-        <div className="s-marquee-label">What clients say</div>
-        <div className="s-marquee-outer">
-          <div className="s-marquee-track">
-            {[...TESTIMONIALS, ...TESTIMONIALS].map((t, i) => (
-              <div key={i} className="s-tcard">
-                <p className="s-tcard-body">&ldquo;{t.body}&rdquo;</p>
-                <div className="s-tcard-attrib">
-                  <span className="s-tcard-avatar">{t.initials}</span>
-                  <div>
-                    <div className="s-tcard-name">{t.name}</div>
-                    <div className="s-tcard-role">{t.role}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
       {/* COMPARISON */}
       <section className="s-section">
-        <div className="s-section-eyebrow">Comparison</div>
-        <h2 className="s-section-h">Three ways companies run outbound.</h2>
-        <p className="s-section-sub">Same goal. Three very different ways. Only one compounds.</p>
-        <div className="s-table-wrap">
+        <div className="s-reveal">
+          <div className="s-section-eyebrow">Comparison</div>
+          <h2 className="s-section-h">Three ways companies run outbound.</h2>
+          <p className="s-section-sub">Same goal. Three very different ways. Only one compounds.</p>
+        </div>
+        <div className="s-table-wrap s-reveal" style={{ '--reveal-delay': '100ms' }}>
           <div className="s-table-scroll">
             <table className="s-table">
               <thead>
@@ -1255,11 +1276,13 @@ export default function SomraPage() {
       <div id="who-its-for" className="s-section-tinted">
         <div className="s-section-tinted-wrap">
           <div className="s-section" style={{ paddingTop: 0, paddingBottom: 0 }}>
-            <div className="s-section-eyebrow">Who it’s for</div>
-            <h2 className="s-section-h">Who Somra is built for.</h2>
-            <p className="s-section-sub">Not for everyone. Honest about both sides.</p>
+            <div className="s-reveal">
+              <div className="s-section-eyebrow">Who it’s for</div>
+              <h2 className="s-section-h">Who Somra is built for.</h2>
+              <p className="s-section-sub">Not for everyone. Honest about both sides.</p>
+            </div>
             <div className="s-fit-grid">
-              <div className="s-fit good">
+              <div className="s-fit good s-reveal">
                 <div className="s-fit-h"><Icon name="check" size={14} /> Good fit</div>
                 <ul className="s-fit-list">
                   {GOOD_FIT.map((g, i) => (
@@ -1270,7 +1293,7 @@ export default function SomraPage() {
                   ))}
                 </ul>
               </div>
-              <div className="s-fit not">
+              <div className="s-fit not s-reveal" style={{ '--reveal-delay': '80ms' }}>
                 <div className="s-fit-h"><Icon name="x" size={14} /> Not a fit</div>
                 <ul className="s-fit-list">
                   {NOT_FIT.map((g, i) => (
@@ -1288,12 +1311,14 @@ export default function SomraPage() {
 
       {/* WHO WE WORK WITH */}
       <section id="verticals" className="s-section s-section-center">
-        <div className="s-section-eyebrow">Who Somra works with</div>
-        <h2 className="s-section-h">The same system, adapted to your buyers.</h2>
-        <p className="s-section-sub">
+        <div className="s-reveal">
+          <div className="s-section-eyebrow">Who Somra works with</div>
+          <h2 className="s-section-h">The same system, adapted to your buyers.</h2>
+          <p className="s-section-sub">
           One outbound structure. Targeting, messaging, and signals tuned to what you sell.
         </p>
-        <div className="s-tabs" role="tablist">
+        </div>
+        <div className="s-tabs s-reveal" style={{ '--reveal-delay': '80ms' }} role="tablist">
           {VERTICALS.map((v) => (
             <button
               key={v.id}
@@ -1321,18 +1346,21 @@ export default function SomraPage() {
       <div id="faq" className="s-section-tinted">
         <div className="s-section-tinted-wrap">
           <div className="s-section s-section-center" style={{ paddingTop: 0, paddingBottom: 0 }}>
-            <div className="s-section-eyebrow">FAQ</div>
-            <h2 className="s-section-h">Questions worth asking before a call.</h2>
-            <p className="s-section-sub">Short answers to what people ask most.</p>
+            <div className="s-reveal">
+              <div className="s-section-eyebrow">FAQ</div>
+              <h2 className="s-section-h">Questions worth asking before a call.</h2>
+              <p className="s-section-sub">Short answers to what people ask most.</p>
+            </div>
             <div className="s-faq-list">
               {FAQS.map((f, i) => (
+                <div key={i} className="s-reveal" style={{ '--reveal-delay': `${i * 60}ms` }}>
                 <FaqItem
-                  key={i}
                   q={f.q}
                   a={f.a}
                   open={openFaq === i}
                   onToggle={() => setOpenFaq(openFaq === i ? -1 : i)}
                 />
+                </div>
               ))}
             </div>
           </div>
@@ -1341,7 +1369,7 @@ export default function SomraPage() {
 
       {/* FINAL CTA */}
       <section className="s-section">
-        <div className="s-final">
+        <div className="s-final s-reveal">
           <div className="s-final-eyebrow"><Icon name="sparkle" size={12} /> Take the next step</div>
           <h2 className="s-final-h">Replace scattered outbound with a managed system.</h2>
           <p className="s-final-sub">
