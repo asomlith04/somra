@@ -282,32 +282,23 @@ const Icon = ({ name, size = 18, className = '' }) => {
   )
 }
 
-function SomraLeafMark({ size = 22, color = '#11079e' }) {
+function SomraLeafMark({ size = 28 }) {
+  // Rounded-square navy "app icon" with a white origami leaf inside, matching brand mark.
   return (
     <svg
       width={size}
       height={size}
-      viewBox="0 0 24 24"
+      viewBox="0 0 48 48"
       fill="none"
       aria-hidden="true"
     >
-      {/* Top leaf */}
-      <path
-        d="M12 13C12 13 9.5 6 13 3.5C16.5 1 17.5 8.5 12 13Z"
-        fill={color}
-      />
-      {/* Bottom-left leaf */}
-      <path
-        d="M11 13C11 13 4.5 12 4 15.5C3.5 19 10.5 18.5 11 13Z"
-        fill={color}
-        opacity="0.72"
-      />
-      {/* Bottom-right leaf */}
-      <path
-        d="M13 13C13 13 19.5 14 20 17.5C20.5 21 13.5 20 13 13Z"
-        fill={color}
-        opacity="0.44"
-      />
+      <rect width="48" height="48" rx="11" fill="#0a0560" />
+      {/* Slim vertical leaf-fold (stem) on the left */}
+      <path d="M14 14 L22 14 L22 31 L14 26 Z" fill="#ffffff" />
+      {/* Small connecting wedge below the stem */}
+      <path d="M14 28 L22 32 L14 32 Z" fill="#ffffff" />
+      {/* Large diagonal blade pointing right */}
+      <path d="M22 32 L36 32 L22 18 Z" fill="#ffffff" />
     </svg>
   )
 }
@@ -557,7 +548,7 @@ export default function SomraPage() {
   return (
     <div className="s-root">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
         .s-root {
           font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -567,8 +558,12 @@ export default function SomraPage() {
           position: relative;
           -webkit-font-smoothing: antialiased;
           text-rendering: optimizeLegibility;
-          font-feature-settings: 'cv11', 'ss01', 'ss03';
+          font-feature-settings: 'cv11', 'ss01', 'ss03', 'zero', 'tnum';
           font-variant-ligatures: contextual;
+        }
+        .s-root h1, .s-root h2, .s-root h3, .s-display {
+          font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+          font-feature-settings: 'ss01', 'ss02', 'zero';
         }
         .s-root *, .s-root *::before, .s-root *::after { box-sizing: border-box; }
         .s-root button { font-family: inherit; }
@@ -605,22 +600,22 @@ export default function SomraPage() {
           height: 64px;
         }
         .s-nav-inner {
-          max-width: 1120px; margin: 0 auto; height: 100%;
+          max-width: 1280px; margin: 0 auto; height: 100%;
           padding: 0 2rem;
           display: flex; align-items: center; justify-content: space-between;
         }
         .s-wordmark {
-          font-size: 16px; font-weight: 700; color: #07033c;
-          letter-spacing: 0.04em;
+          font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+          font-size: 18px; font-weight: 700; color: #07033c;
+          letter-spacing: 0.16em;
           text-transform: uppercase;
-          display: inline-flex; align-items: center; gap: 9px;
+          display: inline-flex; align-items: center; gap: 10px;
         }
         .s-wordmark-mark {
           display: inline-flex; align-items: center; justify-content: center;
-          color: #11079e;
           transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .s-wordmark:hover .s-wordmark-mark { transform: scale(1.1); }
+        .s-wordmark:hover .s-wordmark-mark { transform: scale(1.06) rotate(-2deg); }
         .s-nav-right { display: flex; align-items: center; gap: 2rem; }
         .s-nav-link {
           background: none; border: 0; padding: 0; cursor: pointer;
@@ -659,7 +654,7 @@ export default function SomraPage() {
         }
         .s-hero {
           position: relative; z-index: 1;
-          max-width: 1120px; margin: 0 auto;
+          max-width: 1280px; margin: 0 auto;
           padding: 5rem 2rem 4rem;
           text-align: center;
           flex: 1;
@@ -669,18 +664,19 @@ export default function SomraPage() {
         .s-eyebrow {
           display: inline-flex; align-items: center; gap: 8px;
           font-family: 'JetBrains Mono', ui-monospace, monospace;
-          font-size: 11.5px; font-weight: 500; color: #11079e;
-          background: rgba(17, 7, 158, 0.07);
-          border: 1px solid rgba(17, 7, 158, 0.16);
-          padding: 6px 13px; border-radius: 999px;
-          letter-spacing: 0.02em; text-transform: uppercase;
+          font-size: 11px; font-weight: 500; color: #11079e;
+          background: rgba(17, 7, 158, 0.06);
+          border: 1px solid rgba(17, 7, 158, 0.18);
+          padding: 6px 14px; border-radius: 6px;
+          letter-spacing: 0.16em; text-transform: uppercase;
         }
         .s-eyebrow svg { color: #11079e; }
         .s-h1 {
-          font-size: clamp(2.25rem, 5vw, 3.75rem);
-          font-weight: 600; line-height: 1.04; letter-spacing: -0.038em;
+          font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+          font-size: clamp(2.5rem, 5.4vw, 4.25rem);
+          font-weight: 600; line-height: 1.0; letter-spacing: -0.045em;
           color: #07033c; margin: 1.4rem auto 1.25rem;
-          max-width: 820px;
+          max-width: 900px;
         }
         .s-h1-accent {
           background: linear-gradient(180deg, #11079e 0%, #0c056d 100%);
@@ -733,7 +729,8 @@ export default function SomraPage() {
         }
         .s-flow-step-n {
           font-family: 'JetBrains Mono', ui-monospace, monospace;
-          font-size: 10.5px; font-weight: 500; color: #8888a0; letter-spacing: 0.04em;
+          font-size: 10.5px; font-weight: 500; color: #8888a0; letter-spacing: 0.08em;
+          font-variant-numeric: tabular-nums slashed-zero;
         }
         .s-flow-step-i {
           color: #11079e; display: flex;
@@ -743,23 +740,49 @@ export default function SomraPage() {
         .s-flow-step.active .s-flow-step-n { color: #11079e; }
 
         /* SECTIONS */
-        .s-section { max-width: 1120px; margin: 0 auto; padding: 6.5rem 2rem; position: relative; z-index: 1; }
-        .s-section-tinted { background: #f0f0f8; }
+        .s-section { max-width: 1280px; margin: 0 auto; padding: 6.5rem 2.5rem; position: relative; z-index: 1; }
+        .s-section-tinted { background: #f0f0f8; position: relative; z-index: 1; border-top: 1px solid #e6e6e6; border-bottom: 1px solid #e6e6e6; }
         .s-section-tinted-wrap { padding: 6.5rem 0; }
+
+        /* PAGE FRAME — vertical guide lines that span the entire site width */
+        .s-frame-lines {
+          position: absolute;
+          top: 64px;
+          bottom: 0;
+          left: 0; right: 0;
+          z-index: 0;
+          pointer-events: none;
+          max-width: 1280px;
+          margin: 0 auto;
+        }
+        .s-frame-lines::before, .s-frame-lines::after {
+          content: '';
+          position: absolute;
+          top: 0; bottom: 0;
+          width: 1px;
+          background: linear-gradient(180deg, transparent 0%, rgba(17,7,158,0.10) 8%, rgba(17,7,158,0.10) 92%, transparent 100%);
+        }
+        .s-frame-lines::before { left: 2.5rem; }
+        .s-frame-lines::after { right: 2.5rem; }
+        @media (max-width: 640px) {
+          .s-frame-lines::before { left: 1.25rem; }
+          .s-frame-lines::after { right: 1.25rem; }
+        }
         .s-section-eyebrow {
           font-family: 'JetBrains Mono', ui-monospace, monospace;
-          font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
-          color: #11079e; margin-bottom: 0.875rem;
-          display: inline-flex; align-items: center; gap: 8px;
+          font-size: 11px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase;
+          color: #11079e; margin-bottom: 1rem;
+          display: inline-flex; align-items: center; gap: 10px;
         }
         .s-section-eyebrow::before {
-          content: ''; width: 18px; height: 1px; background: #11079e;
+          content: ''; width: 22px; height: 1px; background: #11079e;
         }
         .s-section-h {
-          font-size: clamp(1.75rem, 3.1vw, 2.4rem);
+          font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+          font-size: clamp(1.875rem, 3.4vw, 2.75rem);
           font-weight: 600; color: #07033c;
-          letter-spacing: -0.03em; line-height: 1.12;
-          max-width: 760px; margin: 0 0 1rem;
+          letter-spacing: -0.035em; line-height: 1.08;
+          max-width: 820px; margin: 0 0 1rem;
         }
         .s-section-sub {
           font-size: 1rem; color: #5a5a7a; line-height: 1.55;
@@ -850,8 +873,9 @@ export default function SomraPage() {
         .s-stage-body { flex: 1; }
         .s-stage-meta {
           font-family: 'JetBrains Mono', ui-monospace, monospace;
-          font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: #8888a0;
+          font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase; color: #8888a0;
           margin-bottom: 4px;
+          font-variant-numeric: tabular-nums slashed-zero;
         }
         .s-stage-t { font-size: 15px; font-weight: 600; color: #07033c; margin-bottom: 3px; letter-spacing: -0.015em; }
         .s-stage-d { font-size: 13.5px; color: #6a6a8a; line-height: 1.5; letter-spacing: -0.005em; }
@@ -880,17 +904,37 @@ export default function SomraPage() {
           flex-shrink: 0;
         }
 
-        /* SCROLL REVEAL */
+        /* SCROLL REVEAL — slower, deeper fade with subtle blur */
         .s-reveal {
           opacity: 0;
-          transform: translateY(28px);
+          transform: translateY(36px);
+          filter: blur(6px);
           transition:
-            opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms),
-            transform 0.65s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms);
+            opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms),
+            transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms),
+            filter 0.85s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms);
+          will-change: opacity, transform, filter;
         }
-        .s-reveal-in { opacity: 1; transform: none; }
+        .s-reveal-in { opacity: 1; transform: none; filter: blur(0); }
         @media (prefers-reduced-motion: reduce) {
-          .s-reveal { opacity: 1; transform: none; transition: none; }
+          .s-reveal { opacity: 1; transform: none; filter: none; transition: none; }
+        }
+
+        /* HERO PARALLAX FADE — content fades out as user scrolls past */
+        .s-hero {
+          animation: heroFadeOnScroll linear both;
+          animation-timeline: scroll(root);
+          animation-range: 0 80vh;
+        }
+        @keyframes heroFadeOnScroll {
+          0% { opacity: 1; transform: translateY(0); }
+          100% { opacity: 0.15; transform: translateY(-40px); }
+        }
+        @supports not (animation-timeline: scroll()) {
+          .s-hero { animation: none; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .s-hero { animation: none; }
         }
 
         /* MICRO-INTERACTIONS */
@@ -1096,7 +1140,7 @@ export default function SomraPage() {
           position: relative; z-index: 1;
         }
         .s-footer-inner {
-          max-width: 1120px; margin: 0 auto; padding: 2.5rem 2rem;
+          max-width: 1280px; margin: 0 auto; padding: 2.5rem 2rem;
           display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap;
         }
         .s-footer-tag { font-size: 13px; color: #8888a0; margin-top: 0.5rem; letter-spacing: -0.005em; }
@@ -1136,12 +1180,15 @@ export default function SomraPage() {
       {/* PAGE-WIDE GLOW — fixed at viewport top */}
       <div className="s-page-glow" aria-hidden="true" />
 
+      {/* FULL-SITE VERTICAL FRAME LINES */}
+      <div className="s-frame-lines" aria-hidden="true" />
+
       {/* NAV */}
       <nav className="s-nav">
         <div className="s-nav-inner">
           <div className="s-wordmark">
             <span className="s-wordmark-mark" aria-hidden="true">
-              <SomraLeafMark size={22} color="#11079e" />
+              <SomraLeafMark size={30} />
             </span>
             Somra
           </div>
@@ -1160,7 +1207,7 @@ export default function SomraPage() {
       {/* HERO */}
       <div className="s-hero-wrap">
       <section className="s-hero">
-        <span className="s-eyebrow">
+        <span className="s-eyebrow s-reveal s-reveal-in">
           <Icon name="sparkle" size={12} />
           Fully managed outbound system
         </span>
@@ -1435,7 +1482,7 @@ export default function SomraPage() {
           <div>
             <div className="s-wordmark">
               <span className="s-wordmark-mark" aria-hidden="true">
-                <SomraLeafMark size={22} color="#11079e" />
+                <SomraLeafMark size={30} />
               </span>
               Somra
             </div>
