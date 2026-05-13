@@ -66,9 +66,10 @@ function AnimatedGridPattern({
         inset: 0,
         width: '100%',
         height: '100%',
-        fill: 'rgba(110,99,233,0.055)',
-        stroke: 'rgba(110,99,233,0.09)',
-        color: 'rgba(110,99,233,0.055)',
+        fill: 'rgba(17,7,158,0.045)',
+        stroke: 'rgba(17,7,158,0.075)',
+        color: 'rgba(17,7,158,0.045)',
+        zIndex: 0,
       }}
     >
       <defs>
@@ -281,6 +282,36 @@ const Icon = ({ name, size = 18, className = '' }) => {
   )
 }
 
+function SomraLeafMark({ size = 22, color = '#11079e' }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
+      {/* Top leaf */}
+      <path
+        d="M12 13C12 13 9.5 6 13 3.5C16.5 1 17.5 8.5 12 13Z"
+        fill={color}
+      />
+      {/* Bottom-left leaf */}
+      <path
+        d="M11 13C11 13 4.5 12 4 15.5C3.5 19 10.5 18.5 11 13Z"
+        fill={color}
+        opacity="0.72"
+      />
+      {/* Bottom-right leaf */}
+      <path
+        d="M13 13C13 13 19.5 14 20 17.5C20.5 21 13.5 20 13 13Z"
+        fill={color}
+        opacity="0.44"
+      />
+    </svg>
+  )
+}
+
 const VERTICALS = [
   {
     id: 'cdp',
@@ -320,7 +351,7 @@ const VERTICALS = [
 ]
 
 const PAINS = [
-  { icon: 'user', t: 'Founder-dependent prospecting', b: 'It only happens in the founder’s spare time.' },
+  { icon: 'user', t: 'Founder-dependent prospecting', b: "It only happens in the founder's spare time." },
   { icon: 'workflow', t: 'No clear process owner', b: 'Tools exist, but no one owns the workflow.' },
   { icon: 'list', t: 'Broad or stale lists', b: 'Targeting is wide instead of well-defined.' },
   { icon: 'mail', t: 'Generic outreach', b: 'Messages read like every other inbox.' },
@@ -353,7 +384,7 @@ const STAGES = [
   { n: '01', icon: 'target', t: 'Market focus and segmentation', d: 'The right accounts, roles, and buying signals.' },
   { n: '02', icon: 'database', t: 'Lead sourcing and verification', d: 'Cleaner lists with better data quality.' },
   { n: '03', icon: 'shield', t: 'Sending infrastructure', d: 'Dedicated domains and responsible deliverability.' },
-  { n: '04', icon: 'pen', t: 'Message strategy', d: 'Outreach written for the buyer’s context.' },
+  { n: '04', icon: 'pen', t: 'Message strategy', d: "Outreach written for the buyer's context." },
   { n: '05', icon: 'repeat', t: 'Cadence and follow-up', d: 'A disciplined sequence across the committee.' },
   { n: '06', icon: 'reply', t: 'Reply handling and qualification', d: 'Prompt, structured, and routed with context.' },
   { n: '07', icon: 'trending', t: 'Reporting and improvement', d: 'Regular reviews focused on what is improving.' },
@@ -371,10 +402,10 @@ const COMPARE = [
   { dim: 'Planning', a: 'Thoughtful but inconsistent', b: 'Fast but shallow', c: 'Built around buyer context and signals' },
   { dim: 'List quality', a: 'Variable, time-dependent', b: 'Broad and lightly verified', c: 'Cleaner, segmented, reviewed each campaign' },
   { dim: 'Sending setup', a: 'Often the primary domain', b: 'Shared, overloaded inboxes', c: 'Dedicated domains, proper warmup' },
-  { dim: 'Message quality', a: 'Authentic but unscaled', b: 'Templated, recycled across clients', c: 'Written for the buyer’s role and context' },
+  { dim: 'Message quality', a: 'Authentic but unscaled', b: 'Templated, recycled across clients', c: "Written for the buyer's role and context" },
   { dim: 'Follow-up discipline', a: 'Drops when other work appears', b: 'Aggressive and undifferentiated', c: 'A planned sequence across the committee' },
   { dim: 'Reply handling', a: 'Slow and bottlenecked', b: 'Auto-qualified, low context', c: 'Prompt, structured, full context' },
-  { dim: 'Reporting', a: 'In the founder’s head', b: 'Activity dashboards, little insight', c: 'Regular reviews of what’s improving' },
+  { dim: 'Reporting', a: "In the founder's head", b: 'Activity dashboards, little insight', c: "Regular reviews of what's improving" },
   { dim: 'Ongoing improvement', a: 'Restarts each quarter', b: 'Same playbook every client', c: 'Refined into a documented system' },
 ]
 
@@ -509,8 +540,8 @@ export default function SomraPage() {
   useEffect(() => {
     const prevHtml = document.documentElement.style.background
     const prevBody = document.body.style.background
-    document.documentElement.style.background = '#FAF8F6'
-    document.body.style.background = '#FAF8F6'
+    document.documentElement.style.background = '#ffffff'
+    document.body.style.background = '#ffffff'
     return () => {
       document.documentElement.style.background = prevHtml
       document.body.style.background = prevBody
@@ -530,9 +561,10 @@ export default function SomraPage() {
 
         .s-root {
           font-family: 'Inter', system-ui, -apple-system, sans-serif;
-          background: #FAF8F6;
-          color: #171725;
+          background: #ffffff;
+          color: #07033c;
           min-height: 100vh;
+          position: relative;
           -webkit-font-smoothing: antialiased;
           text-rendering: optimizeLegibility;
           font-feature-settings: 'cv11', 'ss01', 'ss03';
@@ -546,13 +578,30 @@ export default function SomraPage() {
         }
         .s-tnum { font-variant-numeric: tabular-nums; }
 
+        /* PAGE GLOW — fixed so it persists as user scrolls */
+        .s-page-glow {
+          position: fixed;
+          top: -20%;
+          left: -15%;
+          right: -15%;
+          height: 70vh;
+          z-index: 0;
+          pointer-events: none;
+          background-image: radial-gradient(
+            ellipse 65% 55% at 50% 10%,
+            rgba(17, 7, 158, 0.10),
+            rgba(17, 7, 158, 0.04) 45%,
+            transparent 72%
+          );
+        }
+
         /* NAV */
         .s-nav {
           position: sticky; top: 0; z-index: 100;
-          background: rgba(250, 248, 246, 0.82);
+          background: rgba(255, 255, 255, 0.88);
           backdrop-filter: saturate(180%) blur(12px);
           -webkit-backdrop-filter: saturate(180%) blur(12px);
-          border-bottom: 1px solid #E6E0DA;
+          border-bottom: 1px solid #e6e6e6;
           height: 64px;
         }
         .s-nav-inner {
@@ -561,60 +610,52 @@ export default function SomraPage() {
           display: flex; align-items: center; justify-content: space-between;
         }
         .s-wordmark {
-          font-size: 16px; font-weight: 600; color: #171725;
-          letter-spacing: -0.02em;
+          font-size: 16px; font-weight: 700; color: #07033c;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
           display: inline-flex; align-items: center; gap: 9px;
         }
         .s-wordmark-mark {
-          width: 22px; height: 22px; border-radius: 7px;
-          background: linear-gradient(135deg, #6E63E9 0%, #8E78F5 100%);
           display: inline-flex; align-items: center; justify-content: center;
-          color: #fff; font-size: 11px; font-weight: 700; letter-spacing: -0.02em;
-          box-shadow: 0 4px 10px -4px rgba(110,99,233,0.5);
+          color: #11079e;
+          transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
+        .s-wordmark:hover .s-wordmark-mark { transform: scale(1.1); }
         .s-nav-right { display: flex; align-items: center; gap: 2rem; }
         .s-nav-link {
           background: none; border: 0; padding: 0; cursor: pointer;
-          color: #6A6A78; font-size: 13.5px; font-weight: 500;
+          color: #6a6a8a; font-size: 13.5px; font-weight: 500;
           letter-spacing: -0.005em;
           transition: color 0.18s;
         }
-        .s-nav-link:hover { color: #171725; }
+        .s-nav-link:hover { color: #07033c; }
         .s-btn {
-          background: #171725; color: #fff; border: 0; cursor: pointer;
+          background: #07033c; color: #fff; border: 0; cursor: pointer;
           padding: 10px 18px; border-radius: 999px;
           font-size: 13.5px; font-weight: 500; letter-spacing: -0.005em;
           transition: background 0.18s, transform 0.18s, box-shadow 0.18s;
           display: inline-flex; align-items: center; gap: 7px;
-          box-shadow: 0 1px 0 rgba(255,255,255,0.06) inset, 0 4px 12px -6px rgba(23,23,37,0.4);
+          box-shadow: 0 1px 0 rgba(255,255,255,0.06) inset, 0 4px 12px -6px rgba(7,3,60,0.4);
         }
-        .s-btn:hover { background: #2A2A3D; transform: translateY(-1px); }
-        .s-btn-primary { background: #6E63E9; box-shadow: 0 1px 0 rgba(255,255,255,0.15) inset, 0 8px 20px -8px rgba(110,99,233,0.55); }
-        .s-btn-primary:hover { background: #5E54D8; }
+        .s-btn:hover { background: #0c056d; transform: translateY(-1px); }
+        .s-btn-primary { background: #11079e; box-shadow: 0 1px 0 rgba(255,255,255,0.15) inset, 0 8px 20px -8px rgba(17,7,158,0.55); }
+        .s-btn-primary:hover { background: #0c056d; }
         .s-btn-lg { padding: 13px 24px; font-size: 14.5px; }
         .s-btn-ghost {
-          background: transparent; color: #171725; border: 1px solid #E0DAD3;
+          background: transparent; color: #07033c; border: 1px solid #cccccc;
           padding: 10px 18px; border-radius: 999px;
           font-size: 13.5px; font-weight: 500; letter-spacing: -0.005em;
           cursor: pointer; transition: border-color 0.18s, background 0.18s;
           display: inline-flex; align-items: center; gap: 6px;
         }
-        .s-btn-ghost:hover { border-color: #171725; background: #fff; }
+        .s-btn-ghost:hover { border-color: #11079e; background: #fff; }
 
         /* HERO */
         .s-hero-wrap {
           position: relative;
-          overflow: hidden;
           min-height: calc(100dvh - 64px);
           display: flex;
           flex-direction: column;
-        }
-        .s-hero-glow {
-          position: absolute;
-          inset: -10% -10% 0 -10%;
-          z-index: 0;
-          pointer-events: none;
-          background-image: radial-gradient(ellipse 60% 55% at 50% 18%, rgba(130, 73, 252, 0.22), rgba(130, 73, 252, 0.08) 40%, transparent 70%);
         }
         .s-hero {
           position: relative; z-index: 1;
@@ -628,32 +669,32 @@ export default function SomraPage() {
         .s-eyebrow {
           display: inline-flex; align-items: center; gap: 8px;
           font-family: 'JetBrains Mono', ui-monospace, monospace;
-          font-size: 11.5px; font-weight: 500; color: #6E63E9;
-          background: rgba(110, 99, 233, 0.08);
-          border: 1px solid rgba(110, 99, 233, 0.18);
+          font-size: 11.5px; font-weight: 500; color: #11079e;
+          background: rgba(17, 7, 158, 0.07);
+          border: 1px solid rgba(17, 7, 158, 0.16);
           padding: 6px 13px; border-radius: 999px;
           letter-spacing: 0.02em; text-transform: uppercase;
         }
-        .s-eyebrow svg { color: #6E63E9; }
+        .s-eyebrow svg { color: #11079e; }
         .s-h1 {
           font-size: clamp(2.25rem, 5vw, 3.75rem);
           font-weight: 600; line-height: 1.04; letter-spacing: -0.038em;
-          color: #171725; margin: 1.4rem auto 1.25rem;
+          color: #07033c; margin: 1.4rem auto 1.25rem;
           max-width: 820px;
         }
         .s-h1-accent {
-          background: linear-gradient(180deg, #171725 0%, #3F3F4D 100%);
+          background: linear-gradient(180deg, #11079e 0%, #0c056d 100%);
           -webkit-background-clip: text; background-clip: text;
           -webkit-text-fill-color: transparent;
         }
         .s-hero-sub {
-          font-size: 1.075rem; color: #5A5A68; line-height: 1.55;
+          font-size: 1.075rem; color: #5a5a7a; line-height: 1.55;
           max-width: 620px; margin: 0 auto 2rem;
           letter-spacing: -0.005em;
         }
         .s-cta-row { display: flex; gap: 0.625rem; justify-content: center; align-items: center; flex-wrap: wrap; }
         .s-microline {
-          margin-top: 1.25rem; font-size: 12.5px; color: #8B8B96;
+          margin-top: 1.25rem; font-size: 12.5px; color: #8888a0;
           font-family: 'JetBrains Mono', ui-monospace, monospace;
           letter-spacing: -0.005em;
         }
@@ -661,18 +702,18 @@ export default function SomraPage() {
         /* HERO WORKFLOW */
         .s-flow {
           margin: 3.25rem auto 0; max-width: 1040px;
-          background: #fff; border: 1px solid #E6E0DA;
+          background: #fff; border: 1px solid #e6e6e6;
           border-radius: 18px; padding: 1.5rem;
-          box-shadow: 0 1px 0 rgba(23,23,37,0.02), 0 16px 40px -20px rgba(110,99,233,0.18);
+          box-shadow: 0 1px 0 rgba(7,3,60,0.02), 0 16px 40px -20px rgba(17,7,158,0.14);
         }
         .s-flow-label {
           font-family: 'JetBrains Mono', ui-monospace, monospace;
           font-size: 10.5px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
-          color: #8B8B96; margin-bottom: 1rem;
+          color: #8888a0; margin-bottom: 1rem;
           display: flex; align-items: center; gap: 8px;
         }
         .s-flow-label::before, .s-flow-label::after {
-          content: ''; flex: 1; height: 1px; background: #EFEAE4;
+          content: ''; flex: 1; height: 1px; background: #e8e8ee;
         }
         .s-flow-row {
           display: flex; align-items: stretch; gap: 8px;
@@ -680,7 +721,7 @@ export default function SomraPage() {
         }
         .s-flow-step {
           flex: 1 1 0; min-width: 120px;
-          background: #FAF8F6; border: 1px solid #E6E0DA;
+          background: #f6f6fa; border: 1px solid #e6e6e6;
           border-radius: 10px;
           padding: 12px 12px;
           display: flex; flex-direction: column; gap: 8px;
@@ -692,36 +733,36 @@ export default function SomraPage() {
         }
         .s-flow-step-n {
           font-family: 'JetBrains Mono', ui-monospace, monospace;
-          font-size: 10.5px; font-weight: 500; color: #8B8B96; letter-spacing: 0.04em;
+          font-size: 10.5px; font-weight: 500; color: #8888a0; letter-spacing: 0.04em;
         }
         .s-flow-step-i {
-          color: #6E63E9; display: flex;
+          color: #11079e; display: flex;
         }
-        .s-flow-step-t { font-size: 13px; font-weight: 500; color: #171725; line-height: 1.3; letter-spacing: -0.005em; }
-        .s-flow-step.active { background: #EFEAFE; border-color: #C9BFFC; }
-        .s-flow-step.active .s-flow-step-n { color: #6E63E9; }
+        .s-flow-step-t { font-size: 13px; font-weight: 500; color: #07033c; line-height: 1.3; letter-spacing: -0.005em; }
+        .s-flow-step.active { background: #eaebfc; border-color: #c5c1f5; }
+        .s-flow-step.active .s-flow-step-n { color: #11079e; }
 
         /* SECTIONS */
-        .s-section { max-width: 1120px; margin: 0 auto; padding: 6.5rem 2rem; }
-        .s-section-tinted { background: #F5F1EC; }
+        .s-section { max-width: 1120px; margin: 0 auto; padding: 6.5rem 2rem; position: relative; z-index: 1; }
+        .s-section-tinted { background: #f0f0f8; }
         .s-section-tinted-wrap { padding: 6.5rem 0; }
         .s-section-eyebrow {
           font-family: 'JetBrains Mono', ui-monospace, monospace;
           font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
-          color: #6E63E9; margin-bottom: 0.875rem;
+          color: #11079e; margin-bottom: 0.875rem;
           display: inline-flex; align-items: center; gap: 8px;
         }
         .s-section-eyebrow::before {
-          content: ''; width: 18px; height: 1px; background: #6E63E9;
+          content: ''; width: 18px; height: 1px; background: #11079e;
         }
         .s-section-h {
           font-size: clamp(1.75rem, 3.1vw, 2.4rem);
-          font-weight: 600; color: #171725;
+          font-weight: 600; color: #07033c;
           letter-spacing: -0.03em; line-height: 1.12;
           max-width: 760px; margin: 0 0 1rem;
         }
         .s-section-sub {
-          font-size: 1rem; color: #5A5A68; line-height: 1.55;
+          font-size: 1rem; color: #5a5a7a; line-height: 1.55;
           max-width: 640px; margin: 0 0 2.75rem;
           letter-spacing: -0.005em;
         }
@@ -735,20 +776,20 @@ export default function SomraPage() {
           grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
         }
         .s-pain {
-          background: #fff; border: 1px solid #E6E0DA;
+          background: #fff; border: 1px solid #e6e6e6;
           border-radius: 12px; padding: 1.125rem 1.25rem;
           display: flex; gap: 0.875rem; align-items: flex-start;
           transition: border-color 0.18s, transform 0.18s, box-shadow 0.18s;
         }
-        .s-pain:hover { border-color: #C9BFFC; box-shadow: 0 6px 16px -10px rgba(110,99,233,0.2); }
+        .s-pain:hover { border-color: #c5c1f5; box-shadow: 0 6px 16px -10px rgba(17,7,158,0.18); }
         .s-pain-icon {
           width: 34px; height: 34px; min-width: 34px;
-          background: #EFEAFE; color: #6E63E9;
+          background: #eaebfc; color: #11079e;
           border-radius: 9px;
           display: flex; align-items: center; justify-content: center;
         }
-        .s-pain-t { font-size: 14.5px; font-weight: 600; color: #171725; margin-bottom: 3px; letter-spacing: -0.012em; }
-        .s-pain-b { font-size: 13.5px; color: #6A6A78; line-height: 1.5; letter-spacing: -0.005em; }
+        .s-pain-t { font-size: 14.5px; font-weight: 600; color: #07033c; margin-bottom: 3px; letter-spacing: -0.012em; }
+        .s-pain-b { font-size: 13.5px; color: #6a6a8a; line-height: 1.5; letter-spacing: -0.005em; }
 
         /* OPTIONS */
         .s-options {
@@ -756,7 +797,7 @@ export default function SomraPage() {
           grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         }
         .s-option {
-          background: #fff; border: 1px solid #E6E0DA;
+          background: #fff; border: 1px solid #e6e6e6;
           border-radius: 14px; padding: 1.5rem;
         }
         .s-option-head {
@@ -764,28 +805,28 @@ export default function SomraPage() {
         }
         .s-option-icon {
           width: 34px; height: 34px;
-          background: #F5F1EC; color: #171725;
+          background: #f0f0f8; color: #07033c;
           border-radius: 8px;
           display: flex; align-items: center; justify-content: center;
         }
-        .s-option-t { font-size: 15.5px; font-weight: 600; color: #171725; letter-spacing: -0.015em; }
-        .s-option-d { font-size: 13.5px; color: #6A6A78; line-height: 1.55; letter-spacing: -0.005em; }
-        .s-option-divider { height: 1px; background: #E6E0DA; margin: 1rem 0; }
+        .s-option-t { font-size: 15.5px; font-weight: 600; color: #07033c; letter-spacing: -0.015em; }
+        .s-option-d { font-size: 13.5px; color: #6a6a8a; line-height: 1.55; letter-spacing: -0.005em; }
+        .s-option-divider { height: 1px; background: #e6e6e6; margin: 1rem 0; }
         .s-option-pl {
           font-family: 'JetBrains Mono', ui-monospace, monospace;
           font-size: 10.5px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
           color: #C73659; margin-bottom: 0.4rem;
         }
-        .s-option-p { font-size: 13.5px; color: #3F3F4D; line-height: 1.55; letter-spacing: -0.005em; }
+        .s-option-p { font-size: 13.5px; color: #1a1455; line-height: 1.55; letter-spacing: -0.005em; }
         .s-options-closer {
-          margin-top: 1.75rem; font-size: 14.5px; color: #3F3F4D; line-height: 1.55;
-          background: #fff; border: 1px solid #E6E0DA; border-radius: 12px;
+          margin-top: 1.75rem; font-size: 14.5px; color: #1a1455; line-height: 1.55;
+          background: #fff; border: 1px solid #e6e6e6; border-radius: 12px;
           padding: 1.125rem 1.4rem;
           letter-spacing: -0.01em;
           display: flex; align-items: center; gap: 0.75rem;
         }
         .s-options-closer-mark {
-          color: #6E63E9; flex-shrink: 0;
+          color: #11079e; flex-shrink: 0;
         }
 
         /* STAGES */
@@ -795,25 +836,25 @@ export default function SomraPage() {
         }
         .s-stage {
           display: flex; gap: 1rem; align-items: stretch;
-          background: #fff; border: 1px solid #E6E0DA;
+          background: #fff; border: 1px solid #e6e6e6;
           border-radius: 12px; padding: 1.125rem 1.25rem;
           transition: border-color 0.18s, box-shadow 0.18s;
         }
-        .s-stage:hover { border-color: #C9BFFC; box-shadow: 0 6px 18px -12px rgba(110,99,233,0.22); }
+        .s-stage:hover { border-color: #c5c1f5; box-shadow: 0 6px 18px -12px rgba(17,7,158,0.2); }
         .s-stage-num {
           width: 40px; min-width: 40px; height: 40px;
-          background: #EFEAFE; color: #6E63E9;
+          background: #eaebfc; color: #11079e;
           border-radius: 10px;
           display: flex; align-items: center; justify-content: center;
         }
         .s-stage-body { flex: 1; }
         .s-stage-meta {
           font-family: 'JetBrains Mono', ui-monospace, monospace;
-          font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: #8B8B96;
+          font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: #8888a0;
           margin-bottom: 4px;
         }
-        .s-stage-t { font-size: 15px; font-weight: 600; color: #171725; margin-bottom: 3px; letter-spacing: -0.015em; }
-        .s-stage-d { font-size: 13.5px; color: #6A6A78; line-height: 1.5; letter-spacing: -0.005em; }
+        .s-stage-t { font-size: 15px; font-weight: 600; color: #07033c; margin-bottom: 3px; letter-spacing: -0.015em; }
+        .s-stage-d { font-size: 13.5px; color: #6a6a8a; line-height: 1.5; letter-spacing: -0.005em; }
         @media (min-width: 760px) {
           .s-stages { grid-template-columns: 1fr 1fr; }
         }
@@ -824,15 +865,15 @@ export default function SomraPage() {
           grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
         }
         .s-outcome {
-          background: #fff; border: 1px solid #E6E0DA;
+          background: #fff; border: 1px solid #e6e6e6;
           border-radius: 12px; padding: 1rem 1.125rem;
           display: flex; gap: 0.75rem; align-items: flex-start;
-          font-size: 14px; color: #171725; line-height: 1.45;
+          font-size: 14px; color: #07033c; line-height: 1.45;
           letter-spacing: -0.005em;
         }
         .s-outcome-check {
-          color: #6E63E9;
-          background: #EFEAFE;
+          color: #11079e;
+          background: #eaebfc;
           border-radius: 999px;
           width: 24px; height: 24px;
           display: flex; align-items: center; justify-content: center;
@@ -856,71 +897,69 @@ export default function SomraPage() {
         .s-btn { will-change: transform; }
         .s-btn:active { transform: scale(0.97) !important; }
         .s-btn-primary:hover {
-          box-shadow: 0 0 0 3px rgba(110,99,233,0.18), 0 8px 24px -8px rgba(110,99,233,0.6) !important;
+          box-shadow: 0 0 0 3px rgba(17,7,158,0.15), 0 8px 24px -8px rgba(17,7,158,0.55) !important;
         }
         .s-btn-ghost:active { transform: scale(0.97); }
         .s-pain { will-change: transform; }
-        .s-pain:hover { transform: translateY(-2px) !important; box-shadow: 0 8px 20px -12px rgba(110,99,233,0.22); }
+        .s-pain:hover { transform: translateY(-2px) !important; box-shadow: 0 8px 20px -12px rgba(17,7,158,0.18); }
         .s-option { will-change: transform; }
         .s-option:hover { transform: translateY(-2px); }
         .s-stage { will-change: transform; }
         .s-stage:hover { transform: translateY(-2px) !important; }
         .s-flow-step { cursor: default; }
-        .s-flow-step:hover:not(.active) { background: #F5F1EC; border-color: #C9BFFC; }
+        .s-flow-step:hover:not(.active) { background: #f0f0f8; border-color: #c5c1f5; }
         .s-flow-step-i { transition: color 0.18s, transform 0.2s cubic-bezier(0.16,1,0.3,1); }
         .s-flow-step:hover .s-flow-step-i { transform: scale(1.15); }
         .s-nav-link { position: relative; }
         .s-nav-link::after {
           content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
-          height: 1.5px; background: #6E63E9;
+          height: 1.5px; background: #11079e;
           transform: scaleX(0); transform-origin: left;
           transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .s-nav-link:hover::after { transform: scaleX(1); }
         .s-tab { will-change: transform; }
         .s-tab:active { transform: scale(0.96); }
-        .s-wordmark-mark { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s; }
-        .s-wordmark:hover .s-wordmark-mark { transform: scale(1.08); }
         .s-faq-q { transition: color 0.15s; }
-        .s-faq-item:not(.open):hover .s-faq-q { color: #6E63E9; }
+        .s-faq-item:not(.open):hover .s-faq-q { color: #11079e; }
         .s-faq-toggle { transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background 0.18s; }
-        .s-faq-item.open .s-faq-toggle { transform: rotate(0deg); background: #E0D8FC; }
+        .s-faq-item.open .s-faq-toggle { transform: rotate(0deg); background: #d0ceee; }
         .s-outcome { transition: border-color 0.18s, transform 0.2s cubic-bezier(0.16,1,0.3,1); will-change: transform; }
-        .s-outcome:hover { border-color: #C9BFFC; transform: translateY(-1px); }
+        .s-outcome:hover { border-color: #c5c1f5; transform: translateY(-1px); }
         .s-fit { transition: box-shadow 0.2s, transform 0.2s cubic-bezier(0.16,1,0.3,1); will-change: transform; }
-        .s-fit:hover { transform: translateY(-2px); box-shadow: 0 8px 24px -12px rgba(23,23,37,0.12); }
+        .s-fit:hover { transform: translateY(-2px); box-shadow: 0 8px 24px -12px rgba(7,3,60,0.12); }
 
         /* TABLE */
         .s-table-wrap {
-          background: #fff; border: 1px solid #E6E0DA;
+          background: #fff; border: 1px solid #e6e6e6;
           border-radius: 14px; overflow: hidden;
         }
         .s-table-scroll { overflow-x: auto; }
         .s-table { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 720px; }
         .s-table th, .s-table td {
           padding: 14px 18px; text-align: left;
-          border-bottom: 1px solid #EFEAE4; vertical-align: top;
+          border-bottom: 1px solid #e8e8ee; vertical-align: top;
           letter-spacing: -0.005em;
         }
         .s-table thead th {
-          background: #FAF8F6; color: #171725;
+          background: #f6f6fa; color: #07033c;
           font-size: 12.5px; font-weight: 600; letter-spacing: -0.005em;
         }
-        .s-table thead th.somra-col { background: #EFEAFE; color: #6E63E9; }
-        .s-table td.dim { color: #171725; font-weight: 500; width: 22%; }
-        .s-table td.col-a, .s-table td.col-b { color: #6A6A78; }
-        .s-table td.somra-col { background: #FBF9FF; color: #171725; border-left: 1px solid #E0D8FC; border-right: 1px solid #E0D8FC; font-weight: 500; }
+        .s-table thead th.somra-col { background: #eaebfc; color: #11079e; }
+        .s-table td.dim { color: #07033c; font-weight: 500; width: 22%; }
+        .s-table td.col-a, .s-table td.col-b { color: #6a6a8a; }
+        .s-table td.somra-col { background: #f5f5ff; color: #07033c; border-left: 1px solid #d0ceee; border-right: 1px solid #d0ceee; font-weight: 500; }
         .s-table tbody tr:last-child td { border-bottom: 0; }
         .s-stacked { display: none; }
         @media (max-width: 720px) {
           .s-table-scroll { display: none; }
-          .s-stacked { display: block; padding: 0.75rem; background: #fff; border: 1px solid #E6E0DA; border-radius: 14px; }
-          .s-stacked-card { padding: 0.875rem; border-bottom: 1px solid #EFEAE4; }
+          .s-stacked { display: block; padding: 0.75rem; background: #fff; border: 1px solid #e6e6e6; border-radius: 14px; }
+          .s-stacked-card { padding: 0.875rem; border-bottom: 1px solid #e8e8ee; }
           .s-stacked-card:last-child { border-bottom: 0; }
-          .s-stacked-dim { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: #6E63E9; margin-bottom: 0.5rem; }
-          .s-stacked-row { font-size: 13.5px; line-height: 1.5; margin-bottom: 0.35rem; color: #6A6A78; }
-          .s-stacked-row .lbl { color: #171725; font-weight: 500; margin-right: 0.4rem; }
-          .s-stacked-row.somra { color: #171725; }
+          .s-stacked-dim { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: #11079e; margin-bottom: 0.5rem; }
+          .s-stacked-row { font-size: 13.5px; line-height: 1.5; margin-bottom: 0.35rem; color: #6a6a8a; }
+          .s-stacked-row .lbl { color: #07033c; font-weight: 500; margin-right: 0.4rem; }
+          .s-stacked-row.somra { color: #07033c; }
         }
 
         /* FIT */
@@ -930,24 +969,24 @@ export default function SomraPage() {
         }
         @media (min-width: 760px) { .s-fit-grid { grid-template-columns: 1fr 1fr; } }
         .s-fit {
-          background: #fff; border: 1px solid #E6E0DA;
+          background: #fff; border: 1px solid #e6e6e6;
           border-radius: 14px; padding: 1.75rem;
         }
-        .s-fit.good { border-color: #C9BFFC; background: #FBF9FF; }
+        .s-fit.good { border-color: #c5c1f5; background: #f5f5ff; }
         .s-fit-h {
           font-family: 'JetBrains Mono', ui-monospace, monospace;
           font-size: 11.5px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
           margin-bottom: 1rem;
           display: inline-flex; align-items: center; gap: 8px;
         }
-        .s-fit.good .s-fit-h { color: #6E63E9; }
-        .s-fit.not .s-fit-h { color: #8B8B96; }
+        .s-fit.good .s-fit-h { color: #11079e; }
+        .s-fit.not .s-fit-h { color: #8888a0; }
         .s-fit-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.625rem; }
-        .s-fit-item { display: flex; gap: 0.625rem; font-size: 14px; color: #171725; line-height: 1.5; letter-spacing: -0.005em; }
+        .s-fit-item { display: flex; gap: 0.625rem; font-size: 14px; color: #07033c; line-height: 1.5; letter-spacing: -0.005em; }
         .s-fit-icon { flex-shrink: 0; margin-top: 1px; }
-        .s-fit.good .s-fit-icon { color: #6E63E9; }
-        .s-fit.not .s-fit-icon { color: #B8B8C2; }
-        .s-fit.not .s-fit-item { color: #6A6A78; }
+        .s-fit.good .s-fit-icon { color: #11079e; }
+        .s-fit.not .s-fit-icon { color: #cccccc; }
+        .s-fit.not .s-fit-item { color: #6a6a8a; }
 
         /* TABS */
         .s-tabs {
@@ -955,20 +994,20 @@ export default function SomraPage() {
           margin-top: 1.75rem; margin-bottom: 1.5rem;
         }
         .s-tab {
-          background: #fff; border: 1px solid #E6E0DA; color: #6A6A78;
+          background: #fff; border: 1px solid #e6e6e6; color: #6a6a8a;
           font-size: 13px; font-weight: 500; cursor: pointer;
           padding: 8px 14px; border-radius: 999px;
           transition: all 0.18s;
           display: inline-flex; align-items: center; gap: 7px;
           letter-spacing: -0.005em;
         }
-        .s-tab:hover { color: #171725; border-color: #C9BFFC; }
+        .s-tab:hover { color: #07033c; border-color: #c5c1f5; }
         .s-tab[aria-selected="true"] {
-          background: #EFEAFE; border-color: #C9BFFC; color: #6E63E9;
+          background: #eaebfc; border-color: #c5c1f5; color: #11079e;
         }
         .s-tab-icon { color: inherit; opacity: 0.85; }
         .s-tab-panel {
-          background: #fff; border: 1px solid #E6E0DA;
+          background: #fff; border: 1px solid #e6e6e6;
           border-radius: 14px; padding: 1.875rem 2rem;
           max-width: 720px; margin: 0 auto;
           animation: sFade 0.2s ease-out;
@@ -977,12 +1016,12 @@ export default function SomraPage() {
         }
         .s-tab-panel-icon {
           width: 42px; height: 42px; min-width: 42px;
-          background: #EFEAFE; color: #6E63E9;
+          background: #eaebfc; color: #11079e;
           border-radius: 10px;
           display: flex; align-items: center; justify-content: center;
         }
-        .s-tab-panel-h { font-size: 1.15rem; font-weight: 600; color: #171725; margin-bottom: 0.5rem; letter-spacing: -0.018em; }
-        .s-tab-panel-d { font-size: 14.5px; color: #6A6A78; line-height: 1.55; letter-spacing: -0.005em; }
+        .s-tab-panel-h { font-size: 1.15rem; font-weight: 600; color: #07033c; margin-bottom: 0.5rem; letter-spacing: -0.018em; }
+        .s-tab-panel-d { font-size: 14.5px; color: #6a6a8a; line-height: 1.55; letter-spacing: -0.005em; }
         @keyframes sFade {
           from { opacity: 0; transform: translateY(8px); }
           to { opacity: 1; transform: translateY(0); }
@@ -994,21 +1033,21 @@ export default function SomraPage() {
           max-width: 720px; margin: 0 auto;
         }
         .s-faq-item {
-          background: #fff; border: 1px solid #E6E0DA;
+          background: #fff; border: 1px solid #e6e6e6;
           border-radius: 12px; overflow: hidden;
           transition: border-color 0.18s;
         }
-        .s-faq-item.open { border-color: #C9BFFC; }
+        .s-faq-item.open { border-color: #c5c1f5; }
         .s-faq-q {
           width: 100%; background: transparent; border: 0; cursor: pointer;
           display: flex; justify-content: space-between; align-items: center;
           padding: 1.05rem 1.25rem; text-align: left;
-          font-size: 14.5px; font-weight: 600; color: #171725;
+          font-size: 14.5px; font-weight: 600; color: #07033c;
           letter-spacing: -0.015em;
         }
         .s-faq-toggle {
-          color: #6E63E9; display: flex; align-items: center; justify-content: center;
-          width: 24px; height: 24px; border-radius: 999px; background: #EFEAFE;
+          color: #11079e; display: flex; align-items: center; justify-content: center;
+          width: 24px; height: 24px; border-radius: 999px; background: #eaebfc;
         }
         .s-faq-a-wrap {
           display: grid; grid-template-rows: 0fr;
@@ -1017,7 +1056,7 @@ export default function SomraPage() {
         .s-faq-a-wrap.open { grid-template-rows: 1fr; }
         .s-faq-a-wrap > .s-faq-a { overflow: hidden; min-height: 0; }
         .s-faq-a-inner {
-          font-size: 13.5px; color: #6A6A78; line-height: 1.6;
+          font-size: 13.5px; color: #6a6a8a; line-height: 1.6;
           padding: 0 1.25rem 1.05rem;
           letter-spacing: -0.005em;
           text-align: left;
@@ -1025,52 +1064,53 @@ export default function SomraPage() {
 
         /* FINAL CTA */
         .s-final {
-          background: linear-gradient(180deg, #FFFFFF 0%, #F8F4FE 100%);
-          border: 1px solid #E0D8FC;
+          background: linear-gradient(180deg, #ffffff 0%, #f0f0ff 100%);
+          border: 1px solid #d0ceee;
           border-radius: 20px; padding: 3.5rem 2rem;
           text-align: center; max-width: 820px; margin: 0 auto;
-          box-shadow: 0 1px 0 rgba(23,23,37,0.02), 0 24px 60px -28px rgba(110,99,233,0.32);
+          box-shadow: 0 1px 0 rgba(7,3,60,0.02), 0 24px 60px -28px rgba(17,7,158,0.28);
           position: relative; overflow: hidden;
         }
         .s-final-eyebrow {
           font-family: 'JetBrains Mono', ui-monospace, monospace;
           font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
-          color: #6E63E9; margin-bottom: 1rem;
+          color: #11079e; margin-bottom: 1rem;
           display: inline-flex; align-items: center; gap: 8px;
         }
         .s-final-h {
           font-size: clamp(1.65rem, 3.2vw, 2.25rem); font-weight: 600;
-          color: #171725; letter-spacing: -0.03em; line-height: 1.12;
+          color: #07033c; letter-spacing: -0.03em; line-height: 1.12;
           margin: 0 0 1rem; max-width: 620px; margin-left: auto; margin-right: auto;
         }
-        .s-final-sub { font-size: 1rem; color: #5A5A68; line-height: 1.55; max-width: 540px; margin: 0 auto 1.75rem; letter-spacing: -0.005em; }
+        .s-final-sub { font-size: 1rem; color: #5a5a7a; line-height: 1.55; max-width: 540px; margin: 0 auto 1.75rem; letter-spacing: -0.005em; }
         .s-final-fine {
           font-family: 'JetBrains Mono', ui-monospace, monospace;
-          font-size: 12px; color: #8B8B96; margin-top: 1rem;
+          font-size: 12px; color: #8888a0; margin-top: 1rem;
           letter-spacing: -0.005em;
         }
 
         /* FOOTER */
         .s-footer {
-          border-top: 1px solid #E6E0DA;
+          border-top: 1px solid #e6e6e6;
           margin-top: 3rem;
+          position: relative; z-index: 1;
         }
         .s-footer-inner {
           max-width: 1120px; margin: 0 auto; padding: 2.5rem 2rem;
           display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap;
         }
-        .s-footer-tag { font-size: 13px; color: #8B8B96; margin-top: 0.5rem; letter-spacing: -0.005em; }
+        .s-footer-tag { font-size: 13px; color: #8888a0; margin-top: 0.5rem; letter-spacing: -0.005em; }
         .s-footer-right {
           display: flex; flex-direction: column; gap: 0.35rem; align-items: flex-end;
         }
         .s-footer-email {
-          color: #171725; font-size: 13.5px; text-decoration: none; font-weight: 500;
+          color: #07033c; font-size: 13.5px; text-decoration: none; font-weight: 500;
           display: inline-flex; align-items: center; gap: 6px;
           letter-spacing: -0.005em;
         }
-        .s-footer-email:hover { color: #6E63E9; }
+        .s-footer-email:hover { color: #11079e; }
         .s-footer-copy {
-          text-align: center; font-size: 12px; color: #8B8B96; padding: 0 2rem 2rem;
+          text-align: center; font-size: 12px; color: #8888a0; padding: 0 2rem 2rem;
           font-family: 'JetBrains Mono', ui-monospace, monospace;
           letter-spacing: -0.005em;
         }
@@ -1090,16 +1130,24 @@ export default function SomraPage() {
         }
       `}</style>
 
+      {/* PAGE-WIDE GRID PATTERN */}
+      <AnimatedGridPattern numSquares={60} maxOpacity={0.35} duration={3.5} repeatDelay={1} width={44} height={44} />
+
+      {/* PAGE-WIDE GLOW — fixed at viewport top */}
+      <div className="s-page-glow" aria-hidden="true" />
+
       {/* NAV */}
       <nav className="s-nav">
         <div className="s-nav-inner">
           <div className="s-wordmark">
-            <span className="s-wordmark-mark" aria-hidden="true">S</span>
+            <span className="s-wordmark-mark" aria-hidden="true">
+              <SomraLeafMark size={22} color="#11079e" />
+            </span>
             Somra
           </div>
           <div className="s-nav-right">
             <button className="s-nav-link" onClick={scrollTo('how-it-works')}>How it works</button>
-            <button className="s-nav-link" onClick={scrollTo('who-its-for')}>Who it’s for</button>
+            <button className="s-nav-link" onClick={scrollTo('who-its-for')}>Who it's for</button>
             <button className="s-nav-link" onClick={scrollTo('faq')}>FAQ</button>
             <button className="s-btn s-btn-primary">
               Book a Strategy Call
@@ -1111,8 +1159,6 @@ export default function SomraPage() {
 
       {/* HERO */}
       <div className="s-hero-wrap">
-      <AnimatedGridPattern numSquares={35} maxOpacity={0.4} duration={3} repeatDelay={1} width={44} height={44} />
-      <div className="s-hero-glow" aria-hidden="true" />
       <section className="s-hero">
         <span className="s-eyebrow">
           <Icon name="sparkle" size={12} />
@@ -1185,7 +1231,7 @@ export default function SomraPage() {
             </div>
             <div className="s-options-closer s-reveal" style={{ '--reveal-delay': '240ms' }}>
               <span className="s-options-closer-mark"><Icon name="sparkle" size={18} /></span>
-              The issue isn’t effort. It’s that outbound is run as a series of tasks, not a system.
+              The issue isn't effort. It's that outbound is run as a series of tasks, not a system.
             </div>
           </div>
         </div>
@@ -1277,7 +1323,7 @@ export default function SomraPage() {
         <div className="s-section-tinted-wrap">
           <div className="s-section" style={{ paddingTop: 0, paddingBottom: 0 }}>
             <div className="s-reveal">
-              <div className="s-section-eyebrow">Who it’s for</div>
+              <div className="s-section-eyebrow">Who it's for</div>
               <h2 className="s-section-h">Who Somra is built for.</h2>
               <p className="s-section-sub">Not for everyone. Honest about both sides.</p>
             </div>
@@ -1373,7 +1419,7 @@ export default function SomraPage() {
           <div className="s-final-eyebrow"><Icon name="sparkle" size={12} /> Take the next step</div>
           <h2 className="s-final-h">Replace scattered outbound with a managed system.</h2>
           <p className="s-final-sub">
-            A 30-minute call. We’ll review your setup, name the gaps, and tell you if Somra is the right fit.
+            A 30-minute call. We'll review your setup, name the gaps, and tell you if Somra is the right fit.
           </p>
           <button className="s-btn s-btn-primary s-btn-lg">
             <Icon name="calendar" size={15} />
@@ -1388,7 +1434,9 @@ export default function SomraPage() {
         <div className="s-footer-inner">
           <div>
             <div className="s-wordmark">
-              <span className="s-wordmark-mark" aria-hidden="true">S</span>
+              <span className="s-wordmark-mark" aria-hidden="true">
+                <SomraLeafMark size={22} color="#11079e" />
+              </span>
               Somra
             </div>
             <div className="s-footer-tag">A managed outbound system for higher-value commercial sales.</div>
