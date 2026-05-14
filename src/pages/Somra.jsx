@@ -212,6 +212,29 @@ const Icon = ({ name, size = 18, className = '' }) => {
         <path d="M6 13l6 6 6-6" />
       </>
     ),
+    cpu: (
+      <>
+        <rect x="4" y="4" width="16" height="16" rx="2" />
+        <rect x="9" y="9" width="6" height="6" />
+        <path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3" />
+      </>
+    ),
+    heart: (
+      <>
+        <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
+      </>
+    ),
+    building: (
+      <>
+        <rect x="3" y="3" width="18" height="18" rx="2" />
+        <path d="M9 3v18M3 9h6M3 15h6M15 9h6M15 15h6" />
+      </>
+    ),
+    star: (
+      <>
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+      </>
+    ),
     mail: (
       <>
         <rect x="3" y="5" width="18" height="14" rx="2" />
@@ -339,6 +362,34 @@ const VERTICALS = [
     description: 'Sold to finance, operations, compliance, and risk leaders, where trust and process discipline matter early.',
     icon: 'lock',
   },
+  {
+    id: 'professional',
+    label: 'Professional services',
+    full: 'Consulting, accounting, and advisory firms',
+    description: 'High-value retainer services sold to commercial and operational leaders. Outbound works when the offer is specific and the firm has a clear point of view.',
+    icon: 'briefcase',
+  },
+  {
+    id: 'cybersecurity',
+    label: 'Cybersecurity',
+    full: 'Cybersecurity and information security software',
+    description: 'Sold to CISOs, IT security leads, and heads of infrastructure. Long evaluation cycles with high scrutiny — outbound must open doors, not alarm them.',
+    icon: 'cpu',
+  },
+  {
+    id: 'hrtech',
+    label: 'HR & people tech',
+    full: 'HR, workforce, and people operations software',
+    description: 'Sold to CHROs, heads of people, and people ops leads. Multi-stakeholder buying with HR, finance, and legal all involved at different stages.',
+    icon: 'users',
+  },
+  {
+    id: 'healthtech',
+    label: 'Healthcare B2B',
+    full: 'Health tech and medical operations software',
+    description: 'Sold to hospital operations, clinic networks, and healthcare administrators — not clinicians. Longer procurement, high trust requirements, and strict compliance awareness.',
+    icon: 'heart',
+  },
 ]
 
 const PAINS = [
@@ -414,6 +465,34 @@ const NOT_FIT = [
   'Anyone unwilling to protect domain health',
 ]
 
+const TRUST_SIGNALS = [
+  { icon: 'shield', label: 'Dedicated infrastructure', sub: 'No shared domains or inboxes across clients' },
+  { icon: 'lock',   label: 'Full playbook ownership', sub: 'Everything built stays with you' },
+  { icon: 'users',  label: 'One client per vertical slot', sub: 'No competing campaigns in your market' },
+  { icon: 'star',   label: '7-stage managed system', sub: 'Every stage owned and operated end to end' },
+]
+
+const STEPS = [
+  {
+    n: '01',
+    t: 'Strategy call',
+    d: 'A 30-minute conversation to review your ICP, current setup, and what you have already tried. We will tell you directly whether Somra is the right fit.',
+    icon: 'calendar',
+  },
+  {
+    n: '02',
+    t: 'System build',
+    d: 'Over four to six weeks we set up dedicated infrastructure, build the target list, and write the first sequences. You review and approve before anything sends.',
+    icon: 'workflow',
+  },
+  {
+    n: '03',
+    t: 'Ongoing management',
+    d: 'We run the full system — sending, reply handling, qualification, and reporting — with a regular review cycle to improve each campaign.',
+    icon: 'trending',
+  },
+]
+
 const HERO_STAGES = [
   { label: 'Target accounts', icon: 'target' },
   { label: 'Lead data', icon: 'database' },
@@ -440,6 +519,30 @@ const FAQS = [
   {
     q: 'Do we own the data and the playbook?',
     a: 'Yes. The list, the sequences, the qualification rules, and the playbook stay with you. If we ever part ways, you walk with everything.',
+  },
+  {
+    q: 'How is this different from hiring an SDR?',
+    a: 'An SDR is a person. Somra is a system — infrastructure, data, messaging, cadence, and reporting built and run as a managed function. You get the output of a well-run outbound team without the cost, ramp time, or management overhead of a hire.',
+  },
+  {
+    q: 'What do you need from us to get started?',
+    a: 'A 90-minute onboarding session covering your ICP, deal history, positioning, and any outbound you have already tried. We handle everything after that — research, infrastructure, copy, and execution.',
+  },
+  {
+    q: 'Do you guarantee a number of meetings?',
+    a: 'No. Anyone guaranteeing meeting volumes is either padding the definition of a meeting or burning your domain to hit a number. What we commit to is a disciplined process, honest reporting, and a system that improves with each cycle.',
+  },
+  {
+    q: 'What is the minimum engagement length?',
+    a: 'We ask for a three-month initial commitment. The first month is infrastructure and setup. Results compound from month two onwards. Outbound done properly is not a one-month experiment.',
+  },
+  {
+    q: 'Can you work with our existing CRM and tools?',
+    a: 'Yes. We route qualified replies and meeting bookings into whatever CRM you use. We do not require you to change your stack — we sit alongside it.',
+  },
+  {
+    q: 'What if results slow down over time?',
+    a: 'Every engagement includes a regular review cycle. If reply rates drop, we look at list quality, message fatigue, and market signal shifts before changing anything. The playbook is built to be iterated, not restarted.',
   },
 ]
 
@@ -573,20 +676,20 @@ export default function SomraPage() {
         }
         .s-tnum { font-variant-numeric: tabular-nums; }
 
-        /* PAGE GLOW — fixed so it persists as user scrolls */
+        /* PAGE GLOW — fixed so it persists as user scrolls (indigo center glow) */
         .s-page-glow {
           position: fixed;
-          top: -20%;
+          top: -25%;
           left: -15%;
           right: -15%;
-          height: 70vh;
+          height: 90vh;
           z-index: 0;
           pointer-events: none;
           background-image: radial-gradient(
-            ellipse 65% 55% at 50% 10%,
-            rgba(17, 7, 158, 0.10),
-            rgba(17, 7, 158, 0.04) 45%,
-            transparent 72%
+            circle at 50% 35%,
+            rgba(99, 102, 241, 0.22),
+            rgba(99, 102, 241, 0.08) 35%,
+            transparent 65%
           );
         }
 
@@ -738,6 +841,90 @@ export default function SomraPage() {
         .s-flow-step-t { font-size: 13px; font-weight: 500; color: #07033c; line-height: 1.3; letter-spacing: -0.005em; }
         .s-flow-step.active { background: #eaebfc; border-color: #c5c1f5; }
         .s-flow-step.active .s-flow-step-n { color: #11079e; }
+
+        /* TRUST BAR */
+        .s-trust-bar {
+          border-top: 1px solid #e6e6e6;
+          border-bottom: 1px solid #e6e6e6;
+          background: #f6f6fa;
+          position: relative; z-index: 1;
+        }
+        .s-trust-bar-inner {
+          max-width: 1280px; margin: 0 auto;
+          padding: 0 2.5rem;
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 0;
+        }
+        .s-trust-item {
+          display: flex; align-items: flex-start; gap: 0.875rem;
+          padding: 1.5rem 1.75rem;
+          border-right: 1px solid #e6e6e6;
+        }
+        .s-trust-item:last-child { border-right: 0; }
+        .s-trust-icon {
+          width: 36px; height: 36px; min-width: 36px;
+          background: #eaebfc; color: #11079e;
+          border-radius: 9px;
+          display: flex; align-items: center; justify-content: center;
+          flex-shrink: 0;
+        }
+        .s-trust-label {
+          font-size: 13.5px; font-weight: 600; color: #07033c;
+          letter-spacing: -0.012em; margin-bottom: 3px;
+        }
+        .s-trust-sub {
+          font-size: 12.5px; color: #8888a0; line-height: 1.45;
+          letter-spacing: -0.005em;
+        }
+        @media (max-width: 900px) {
+          .s-trust-bar-inner { grid-template-columns: 1fr 1fr; }
+          .s-trust-item:nth-child(2) { border-right: 0; }
+          .s-trust-item:nth-child(1),
+          .s-trust-item:nth-child(2) { border-bottom: 1px solid #e6e6e6; }
+        }
+        @media (max-width: 640px) {
+          .s-trust-bar-inner { grid-template-columns: 1fr; padding: 0 1.25rem; }
+          .s-trust-item { border-right: 0; border-bottom: 1px solid #e6e6e6; }
+          .s-trust-item:last-child { border-bottom: 0; }
+        }
+
+        /* STEPS */
+        .s-steps {
+          display: grid; gap: 1rem;
+          grid-template-columns: repeat(3, 1fr);
+        }
+        @media (max-width: 760px) { .s-steps { grid-template-columns: 1fr; } }
+        .s-step {
+          background: #fff; border: 1px solid #e6e6e6;
+          border-radius: 14px; padding: 1.75rem;
+          position: relative;
+          transition: border-color 0.18s, box-shadow 0.18s, transform 0.2s cubic-bezier(0.16,1,0.3,1);
+          will-change: transform;
+        }
+        .s-step:hover { border-color: #c5c1f5; transform: translateY(-2px); box-shadow: 0 8px 24px -12px rgba(17,7,158,0.18); }
+        .s-step-num {
+          font-family: 'JetBrains Mono', ui-monospace, monospace;
+          font-size: 11px; font-weight: 500; letter-spacing: 0.18em;
+          color: #11079e; text-transform: uppercase; margin-bottom: 1rem;
+          display: flex; align-items: center; gap: 8px;
+        }
+        .s-step-num::before {
+          content: ''; width: 18px; height: 1px; background: #c5c1f5;
+        }
+        .s-step-icon {
+          width: 40px; height: 40px;
+          background: #eaebfc; color: #11079e;
+          border-radius: 10px;
+          display: flex; align-items: center; justify-content: center;
+          margin-bottom: 1rem;
+        }
+        .s-step-t {
+          font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+          font-size: 1.05rem; font-weight: 600; color: #07033c;
+          letter-spacing: -0.02em; margin-bottom: 0.5rem;
+        }
+        .s-step-d { font-size: 13.5px; color: #6a6a8a; line-height: 1.55; letter-spacing: -0.005em; }
 
         /* SECTIONS */
         .s-section { max-width: 1280px; margin: 0 auto; padding: 6.5rem 2.5rem; position: relative; z-index: 1; }
@@ -1246,6 +1433,21 @@ export default function SomraPage() {
       </section>
       </div>
 
+      {/* TRUST SIGNALS BAR */}
+      <div className="s-trust-bar">
+        <div className="s-trust-bar-inner">
+          {TRUST_SIGNALS.map((sig, i) => (
+            <div key={i} className="s-trust-item s-reveal" style={{ '--reveal-delay': `${i * 60}ms` }}>
+              <div className="s-trust-icon"><Icon name={sig.icon} size={17} /></div>
+              <div>
+                <div className="s-trust-label">{sig.label}</div>
+                <div className="s-trust-sub">{sig.sub}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* WHY MOST EFFORTS STALL */}
       <section className="s-section">
         <div className="s-reveal">
@@ -1459,6 +1661,25 @@ export default function SomraPage() {
           </div>
         </div>
       </div>
+
+      {/* HOW TO GET STARTED */}
+      <section className="s-section">
+        <div className="s-reveal">
+          <div className="s-section-eyebrow">Getting started</div>
+          <h2 className="s-section-h">Three steps from conversation to live system.</h2>
+          <p className="s-section-sub">No lengthy onboarding. No stack requirements. A clear process from the first call.</p>
+        </div>
+        <div className="s-steps">
+          {STEPS.map((s, i) => (
+            <div key={s.n} className="s-step s-reveal" style={{ '--reveal-delay': `${i * 90}ms` }}>
+              <div className="s-step-num">Step {s.n}</div>
+              <div className="s-step-icon"><Icon name={s.icon} size={18} /></div>
+              <div className="s-step-t">{s.t}</div>
+              <div className="s-step-d">{s.d}</div>
+            </div>
+          ))}
+        </div>
+      </section>
 
       {/* FINAL CTA */}
       <section className="s-section">

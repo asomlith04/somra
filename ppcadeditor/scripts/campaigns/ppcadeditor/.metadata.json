@@ -1,0 +1,43 @@
+{
+  "campaign_name": "ppcadeditor",
+  "sequencer": "instantly",
+  "created_at": "2026-05-14T04:34:29Z",
+  "orchestrator": "cold-email-quickstart",
+  "phases": {
+    "preflight": {
+      "status": "complete",
+      "completed_at": "2026-05-14T04:34:34Z"
+    },
+    "infrastructure": {
+      "status": "pending"
+    },
+    "api_key": {
+      "status": "pending"
+    },
+    "inboxes": {
+      "status": "pending"
+    },
+    "strategy": {
+      "status": "pending"
+    },
+    "lead_tracking": {
+      "status": "pending"
+    },
+    "leads": {
+      "status": "pending"
+    },
+    "verification": {
+      "status": "pending"
+    },
+    "copywriting": {
+      "status": "pending"
+    },
+    "ab_testing": {
+      "status": "pending"
+    },
+    "deployment": {
+      "status": "pending"
+    },
+    "quickstart_complete": false
+  }
+}
