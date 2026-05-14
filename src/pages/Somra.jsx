@@ -546,6 +546,42 @@ const FAQS = [
   },
 ]
 
+function SomraSystemDiagram() {
+  return (
+    <div className="s-diagram-card" role="img" aria-label="Somra outbound system — ICP, Infrastructure, Sequences, Reply handling, and Learning loop connected to a central managed system">
+      {/* Dashed connecting lines */}
+      <svg className="s-diagram-svg" viewBox="0 0 500 420" fill="none" aria-hidden="true">
+        <line x1="250" y1="210" x2="85"  y2="56"  stroke="rgba(99,102,241,0.25)" strokeWidth="1.5" strokeDasharray="5 4" />
+        <line x1="250" y1="210" x2="415" y2="47"  stroke="rgba(99,102,241,0.25)" strokeWidth="1.5" strokeDasharray="5 4" />
+        <line x1="250" y1="210" x2="75"  y2="266" stroke="rgba(99,102,241,0.25)" strokeWidth="1.5" strokeDasharray="5 4" />
+        <line x1="250" y1="210" x2="415" y2="274" stroke="rgba(99,102,241,0.25)" strokeWidth="1.5" strokeDasharray="5 4" />
+        <line x1="250" y1="210" x2="250" y2="381" stroke="rgba(99,102,241,0.25)" strokeWidth="1.5" strokeDasharray="5 4" />
+      </svg>
+      {/* Center node */}
+      <div className="s-diagram-center">
+        <div className="s-diagram-center-dot" />
+        <span className="s-diagram-center-lbl">SOMRA{'\n'}SYSTEM</span>
+      </div>
+      {/* Peripheral nodes */}
+      <div className="s-diagram-node" style={{ top: '9%', left: '6%' }}>
+        <span className="s-diagram-node-icon"><Icon name="target" size={13} /></span>ICP
+      </div>
+      <div className="s-diagram-node" style={{ top: '7%', right: '3%' }}>
+        <span className="s-diagram-node-icon"><Icon name="shield" size={13} /></span>Infrastructure
+      </div>
+      <div className="s-diagram-node" style={{ top: '59%', left: '4%' }}>
+        <span className="s-diagram-node-icon"><Icon name="pen" size={13} /></span>Sequences
+      </div>
+      <div className="s-diagram-node" style={{ top: '61%', right: '3%' }}>
+        <span className="s-diagram-node-icon"><Icon name="reply" size={13} /></span>Reply handling
+      </div>
+      <div className="s-diagram-node" style={{ bottom: '5%', left: '50%', transform: 'translateX(-50%)' }}>
+        <span className="s-diagram-node-icon"><Icon name="repeat" size={13} /></span>Learning loop
+      </div>
+    </div>
+  )
+}
+
 function useScrollReveal() {
   useEffect(() => {
     const mo = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -752,34 +788,28 @@ export default function SomraPage() {
         .s-hero-wrap {
           position: relative;
           min-height: calc(100dvh - 64px);
-          display: flex;
-          flex-direction: column;
+          display: flex; flex-direction: column; justify-content: center;
         }
         .s-hero {
           position: relative; z-index: 1;
-          max-width: 1280px; margin: 0 auto;
-          padding: 5rem 2rem 4rem;
-          text-align: center;
-          flex: 1;
-          display: flex; flex-direction: column;
-          align-items: center; justify-content: center;
+          max-width: 1280px; margin: 0 auto; width: 100%;
+          padding: 4rem 2.5rem 5rem;
+          display: grid; grid-template-columns: 55fr 45fr;
+          align-items: center; gap: 3.5rem;
         }
+        .s-hero-content { display: flex; flex-direction: column; align-items: flex-start; }
+        .s-hero-visual { display: flex; align-items: center; justify-content: flex-end; }
         .s-eyebrow {
-          display: inline-flex; align-items: center; gap: 8px;
           font-family: 'JetBrains Mono', ui-monospace, monospace;
-          font-size: 11px; font-weight: 500; color: #11079e;
-          background: rgba(17, 7, 158, 0.06);
-          border: 1px solid rgba(17, 7, 158, 0.18);
-          padding: 6px 14px; border-radius: 6px;
-          letter-spacing: 0.16em; text-transform: uppercase;
+          font-size: 10.5px; font-weight: 500; color: #11079e;
+          letter-spacing: 0.2em; text-transform: uppercase;
+          margin-bottom: 1.5rem; display: inline-block;
         }
-        .s-eyebrow svg { color: #11079e; }
         .s-h1 {
           font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif;
-          font-size: clamp(2.5rem, 5.4vw, 4.25rem);
-          font-weight: 600; line-height: 1.0; letter-spacing: -0.045em;
-          color: #07033c; margin: 1.4rem auto 1.25rem;
-          max-width: 900px;
+          font-size: clamp(2.75rem, 5vw, 4.5rem);
+          font-weight: 800; line-height: 0.97; letter-spacing: -0.05em;
+          color: #07033c; margin: 0 0 1.5rem;
         }
         .s-h1-accent {
           background: linear-gradient(180deg, #11079e 0%, #0c056d 100%);
@@ -787,105 +817,91 @@ export default function SomraPage() {
           -webkit-text-fill-color: transparent;
         }
         .s-hero-sub {
-          font-size: 1.075rem; color: #5a5a7a; line-height: 1.55;
-          max-width: 620px; margin: 0 auto 2rem;
-          letter-spacing: -0.005em;
+          font-size: 1.05rem; color: #5a5a7a; line-height: 1.65;
+          margin: 0 0 2.25rem; letter-spacing: -0.005em; max-width: 500px;
         }
-        .s-cta-row { display: flex; gap: 0.625rem; justify-content: center; align-items: center; flex-wrap: wrap; }
-        .s-microline {
-          margin-top: 1.25rem; font-size: 12.5px; color: #8888a0;
-          font-family: 'JetBrains Mono', ui-monospace, monospace;
-          letter-spacing: -0.005em;
+        .s-cta-row { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+        .s-btn-text-link {
+          background: none; border: 0; cursor: pointer; font-family: inherit;
+          font-size: 14.5px; font-weight: 500; color: #07033c;
+          letter-spacing: -0.005em; padding: 0;
+          display: inline-flex; align-items: center; gap: 6px;
+          transition: gap 0.18s ease, color 0.18s;
         }
+        .s-btn-text-link:hover { color: #11079e; gap: 10px; }
 
-        /* HERO WORKFLOW */
-        .s-flow {
-          margin: 3.25rem auto 0; max-width: 1040px;
-          background: #fff; border: 1px solid #e6e6e6;
-          border-radius: 18px; padding: 1.5rem;
-          box-shadow: 0 1px 0 rgba(7,3,60,0.02), 0 16px 40px -20px rgba(17,7,158,0.14);
-        }
-        .s-flow-label {
-          font-family: 'JetBrains Mono', ui-monospace, monospace;
-          font-size: 10.5px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
-          color: #8888a0; margin-bottom: 1rem;
-          display: flex; align-items: center; gap: 8px;
-        }
-        .s-flow-label::before, .s-flow-label::after {
-          content: ''; flex: 1; height: 1px; background: #e8e8ee;
-        }
-        .s-flow-row {
-          display: flex; align-items: stretch; gap: 8px;
-          overflow-x: auto;
-        }
-        .s-flow-step {
-          flex: 1 1 0; min-width: 120px;
-          background: #f6f6fa; border: 1px solid #e6e6e6;
-          border-radius: 10px;
-          padding: 12px 12px;
-          display: flex; flex-direction: column; gap: 8px;
+        /* NODE DIAGRAM */
+        .s-diagram-card {
           position: relative;
-          transition: background 0.18s, border-color 0.18s;
+          background: linear-gradient(150deg, #f8f8fc 0%, #f0f0f8 100%);
+          border: 1px solid #e6e6e6; border-radius: 22px;
+          aspect-ratio: 500 / 420; width: 100%; max-width: 520px;
+          box-shadow: 0 4px 32px -8px rgba(17,7,158,0.10), 0 1px 0 rgba(255,255,255,0.8) inset;
         }
-        .s-flow-step-top {
-          display: flex; align-items: center; justify-content: space-between;
+        .s-diagram-svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+        .s-diagram-center {
+          position: absolute; top: 50%; left: 50%;
+          transform: translate(-50%, -46%);
+          width: 88px; height: 88px;
+          background: #eaebfc; border: 1.5px solid #c5c1f5; border-radius: 22px;
+          display: flex; flex-direction: column; align-items: center;
+          justify-content: center; gap: 6px;
+          box-shadow: 0 4px 16px -6px rgba(17,7,158,0.2);
         }
-        .s-flow-step-n {
+        .s-diagram-center-dot {
+          width: 18px; height: 18px; background: #11079e; border-radius: 50%;
+          box-shadow: 0 0 0 5px rgba(17,7,158,0.12);
+        }
+        .s-diagram-center-lbl {
           font-family: 'JetBrains Mono', ui-monospace, monospace;
-          font-size: 10.5px; font-weight: 500; color: #8888a0; letter-spacing: 0.08em;
-          font-variant-numeric: tabular-nums slashed-zero;
+          font-size: 7px; font-weight: 600; color: #11079e;
+          letter-spacing: 0.1em; text-align: center; line-height: 1.5; white-space: pre-line;
         }
-        .s-flow-step-i {
-          color: #11079e; display: flex;
+        .s-diagram-node {
+          position: absolute; background: #fff; border: 1px solid #e8e8ee;
+          border-radius: 10px; padding: 7px 12px;
+          display: flex; align-items: center; gap: 7px;
+          font-size: 13px; font-weight: 500; color: #07033c;
+          white-space: nowrap; letter-spacing: -0.005em;
+          box-shadow: 0 2px 10px -4px rgba(0,0,0,0.08);
         }
-        .s-flow-step-t { font-size: 13px; font-weight: 500; color: #07033c; line-height: 1.3; letter-spacing: -0.005em; }
-        .s-flow-step.active { background: #eaebfc; border-color: #c5c1f5; }
-        .s-flow-step.active .s-flow-step-n { color: #11079e; }
+        .s-diagram-node-icon { color: #11079e; display: flex; }
 
         /* TRUST BAR */
         .s-trust-bar {
-          border-top: 1px solid #e6e6e6;
-          border-bottom: 1px solid #e6e6e6;
-          background: #f6f6fa;
-          position: relative; z-index: 1;
+          background: #fff; border: 1px solid #e6e6e6;
+          border-radius: 16px; position: relative; z-index: 1;
+          max-width: 1280px; margin: 0 auto 0;
+          box-shadow: 0 2px 12px -6px rgba(17,7,158,0.07);
         }
+        .s-trust-bar-outer { padding: 0 2.5rem 3rem; }
         .s-trust-bar-inner {
-          max-width: 1280px; margin: 0 auto;
-          padding: 0 2.5rem;
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 0;
+          display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
         }
         .s-trust-item {
-          display: flex; align-items: flex-start; gap: 0.875rem;
-          padding: 1.5rem 1.75rem;
-          border-right: 1px solid #e6e6e6;
+          padding: 1.75rem 1.75rem;
+          border-right: 1px solid #e8e8ee;
         }
         .s-trust-item:last-child { border-right: 0; }
-        .s-trust-icon {
-          width: 36px; height: 36px; min-width: 36px;
-          background: #eaebfc; color: #11079e;
-          border-radius: 9px;
-          display: flex; align-items: center; justify-content: center;
-          flex-shrink: 0;
-        }
         .s-trust-label {
-          font-size: 13.5px; font-weight: 600; color: #07033c;
-          letter-spacing: -0.012em; margin-bottom: 3px;
+          font-family: 'JetBrains Mono', ui-monospace, monospace;
+          font-size: 10px; font-weight: 600; color: #11079e;
+          letter-spacing: 0.18em; text-transform: uppercase;
+          margin-bottom: 0.625rem;
         }
         .s-trust-sub {
-          font-size: 12.5px; color: #8888a0; line-height: 1.45;
+          font-size: 13.5px; color: #5a5a7a; line-height: 1.5;
           letter-spacing: -0.005em;
         }
         @media (max-width: 900px) {
           .s-trust-bar-inner { grid-template-columns: 1fr 1fr; }
           .s-trust-item:nth-child(2) { border-right: 0; }
-          .s-trust-item:nth-child(1),
-          .s-trust-item:nth-child(2) { border-bottom: 1px solid #e6e6e6; }
+          .s-trust-item:nth-child(1), .s-trust-item:nth-child(2) { border-bottom: 1px solid #e8e8ee; }
         }
         @media (max-width: 640px) {
-          .s-trust-bar-inner { grid-template-columns: 1fr; padding: 0 1.25rem; }
-          .s-trust-item { border-right: 0; border-bottom: 1px solid #e6e6e6; }
+          .s-trust-bar-outer { padding: 0 1.25rem 2rem; }
+          .s-trust-bar-inner { grid-template-columns: 1fr; }
+          .s-trust-item { border-right: 0; border-bottom: 1px solid #e8e8ee; }
           .s-trust-item:last-child { border-bottom: 0; }
         }
 
@@ -1107,21 +1123,21 @@ export default function SomraPage() {
           .s-reveal { opacity: 1; transform: none; filter: none; transition: none; }
         }
 
-        /* HERO PARALLAX FADE — content fades out as user scrolls past */
-        .s-hero {
+        /* HERO PARALLAX FADE — content fades as user scrolls past */
+        .s-hero-content {
           animation: heroFadeOnScroll linear both;
           animation-timeline: scroll(root);
-          animation-range: 0 80vh;
+          animation-range: 0 75vh;
         }
         @keyframes heroFadeOnScroll {
           0% { opacity: 1; transform: translateY(0); }
-          100% { opacity: 0.15; transform: translateY(-40px); }
+          100% { opacity: 0.1; transform: translateY(-32px); }
         }
         @supports not (animation-timeline: scroll()) {
-          .s-hero { animation: none; }
+          .s-hero-content { animation: none; }
         }
         @media (prefers-reduced-motion: reduce) {
-          .s-hero { animation: none; }
+          .s-hero-content { animation: none; }
         }
 
         /* MICRO-INTERACTIONS */
@@ -1137,10 +1153,8 @@ export default function SomraPage() {
         .s-option:hover { transform: translateY(-2px); }
         .s-stage { will-change: transform; }
         .s-stage:hover { transform: translateY(-2px) !important; }
-        .s-flow-step { cursor: default; }
-        .s-flow-step:hover:not(.active) { background: #f0f0f8; border-color: #c5c1f5; }
-        .s-flow-step-i { transition: color 0.18s, transform 0.2s cubic-bezier(0.16,1,0.3,1); }
-        .s-flow-step:hover .s-flow-step-i { transform: scale(1.15); }
+        .s-diagram-node { transition: border-color 0.18s, box-shadow 0.18s, transform 0.2s cubic-bezier(0.16,1,0.3,1); }
+        .s-diagram-node:hover { border-color: #c5c1f5; transform: translateY(-1px); box-shadow: 0 4px 16px -6px rgba(17,7,158,0.18); }
         .s-nav-link { position: relative; }
         .s-nav-link::after {
           content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
@@ -1346,17 +1360,20 @@ export default function SomraPage() {
           letter-spacing: -0.005em;
         }
 
+        @media (max-width: 900px) {
+          .s-hero { grid-template-columns: 1fr; gap: 2.5rem; }
+          .s-hero-visual { display: none; }
+        }
         @media (max-width: 640px) {
           .s-nav-inner { padding: 0 1.25rem; }
           .s-nav-right { gap: 0.875rem; }
           .s-nav-right .s-nav-link { display: none; }
-          .s-hero { padding: 3.25rem 1.25rem 2.5rem; }
+          .s-hero { padding: 3rem 1.25rem 2.5rem; }
+          .s-h1 { font-size: clamp(2.25rem, 8vw, 3rem); }
           .s-section, .s-footer-inner { padding-left: 1.25rem; padding-right: 1.25rem; }
           .s-section { padding-top: 4rem; padding-bottom: 4rem; }
           .s-section-tinted-wrap { padding: 4rem 0; }
           .s-final { padding: 2.5rem 1.5rem; }
-          .s-flow { padding: 1.25rem; }
-          .s-flow-row { flex-direction: column; }
           .s-tab-panel { flex-direction: column; }
         }
       `}</style>
@@ -1380,12 +1397,12 @@ export default function SomraPage() {
             Somra
           </div>
           <div className="s-nav-right">
-            <button className="s-nav-link" onClick={scrollTo('how-it-works')}>How it works</button>
-            <button className="s-nav-link" onClick={scrollTo('who-its-for')}>Who it's for</button>
+            <button className="s-nav-link" onClick={scrollTo('how-it-works')}>The system</button>
+            <button className="s-nav-link" onClick={scrollTo('problem')}>The problem</button>
             <button className="s-nav-link" onClick={scrollTo('faq')}>FAQ</button>
+            <button className="s-nav-link" onClick={scrollTo('verticals')}>Use cases</button>
             <button className="s-btn s-btn-primary">
-              Book a Strategy Call
-              <Icon name="arrowRight" size={14} />
+              Book a Diagnostic Call
             </button>
           </div>
         </div>
@@ -1393,63 +1410,52 @@ export default function SomraPage() {
 
       {/* HERO */}
       <div className="s-hero-wrap">
-      <section className="s-hero">
-        <span className="s-eyebrow s-reveal s-reveal-in">
-          <Icon name="sparkle" size={12} />
-          Fully managed outbound system
-        </span>
-        <h1 className="s-h1">
-          Turn cold prospects into <span className="s-h1-accent">qualified sales conversations.</span>
-        </h1>
-        <p className="s-hero-sub">
-          Somra designs, builds, and operates the full outbound system behind your pipeline — so your team can focus on selling, not stitching tools together.
-        </p>
-        <div className="s-cta-row">
-          <button className="s-btn s-btn-primary s-btn-lg">
-            <Icon name="calendar" size={15} />
-            Book a Strategy Call
-          </button>
-          <button className="s-btn-ghost" onClick={scrollTo('how-it-works')}>
-            See How the System Works
-            <Icon name="arrowDown" size={14} />
-          </button>
-        </div>
-        <div className="s-microline">No spam-heavy tactics  ·  No generic scripts  ·  No vanity-metric reporting</div>
+        <section className="s-hero">
+          {/* LEFT — copy */}
+          <div className="s-hero-content">
+            <span className="s-eyebrow s-reveal s-reveal-in">
+              For businesses with high-value contracts and complex sales cycles
+            </span>
+            <h1 className="s-h1">
+              The outbound system built for <span className="s-h1-accent">complex sales cycles.</span>
+            </h1>
+            <p className="s-hero-sub">
+              We design and run the outbound system your business should already have — without burning your domain, your founder's calendar, or your ICP.
+            </p>
+            <div className="s-cta-row">
+              <button className="s-btn s-btn-primary s-btn-lg">
+                <Icon name="calendar" size={15} />
+                Book a Diagnostic Call
+              </button>
+              <button className="s-btn-text-link" onClick={scrollTo('how-it-works')}>
+                See how the system works
+                <Icon name="arrowRight" size={15} />
+              </button>
+            </div>
+          </div>
+          {/* RIGHT — node diagram */}
+          <div className="s-hero-visual">
+            <SomraSystemDiagram />
+          </div>
+        </section>
+      </div>
 
-        <div className="s-flow" aria-label="Outbound system workflow">
-          <div className="s-flow-label">The Somra System  ·  7 Stages</div>
-          <div className="s-flow-row">
-            {HERO_STAGES.map((s, i) => (
-              <div key={s.label} className={`s-flow-step${i === 0 ? ' active' : ''}`}>
-                <div className="s-flow-step-top">
-                  <span className="s-flow-step-n">{String(i + 1).padStart(2, '0')}</span>
-                  <span className="s-flow-step-i"><Icon name={s.icon} size={15} /></span>
-                </div>
-                <span className="s-flow-step-t">{s.label}</span>
+      {/* TRUST SIGNALS BAR */}
+      <div className="s-trust-bar-outer">
+        <div className="s-trust-bar">
+          <div className="s-trust-bar-inner">
+            {TRUST_SIGNALS.map((sig, i) => (
+              <div key={i} className="s-trust-item s-reveal" style={{ '--reveal-delay': `${i * 60}ms` }}>
+                <div className="s-trust-label">{sig.label}</div>
+                <div className="s-trust-sub">{sig.sub}</div>
               </div>
             ))}
           </div>
         </div>
-      </section>
-      </div>
-
-      {/* TRUST SIGNALS BAR */}
-      <div className="s-trust-bar">
-        <div className="s-trust-bar-inner">
-          {TRUST_SIGNALS.map((sig, i) => (
-            <div key={i} className="s-trust-item s-reveal" style={{ '--reveal-delay': `${i * 60}ms` }}>
-              <div className="s-trust-icon"><Icon name={sig.icon} size={17} /></div>
-              <div>
-                <div className="s-trust-label">{sig.label}</div>
-                <div className="s-trust-sub">{sig.sub}</div>
-              </div>
-            </div>
-          ))}
-        </div>
       </div>
 
       {/* WHY MOST EFFORTS STALL */}
-      <section className="s-section">
+      <section id="problem" className="s-section">
         <div className="s-reveal">
           <div className="s-section-eyebrow">The problem</div>
           <h2 className="s-section-h">Most outbound stalls before it produces real conversations.</h2>
@@ -1691,7 +1697,7 @@ export default function SomraPage() {
           </p>
           <button className="s-btn s-btn-primary s-btn-lg">
             <Icon name="calendar" size={15} />
-            Book a Strategy Call
+            Book a Diagnostic Call
           </button>
           <div className="s-final-fine">No deck  ·  No pitch  ·  Real conversation about your outbound</div>
         </div>
